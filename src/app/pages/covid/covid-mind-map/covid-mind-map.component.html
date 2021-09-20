@@ -1,0 +1,22 @@
+    <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" class="p-2">
+        <mat-card>
+            <mat-card-header fxLayoutAlign="left center">
+                <mat-card-subtitle>
+                    <h5 class="heading">Daily Meets</h5>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <div class="w-100 h-300p" style="text-align: -webkit-center;" #resizedDiv>
+                <ng-container *ngIf="userMeet.length !=0; else noMeets">
+                <ejs-diagram #diagram id="diagram" [getNodeDefaults]=getNodeDefaults
+                    [snapSettings]=snapSettings [selectedItems]="selectedItems" [getCustomTool]='getCustomTool'
+                    (selectionChange)="selectionChange($event)" (created)="create($event)" [tool]=tool [layout]='layout'
+                    [dataSourceSettings]='data' [getConnectorDefaults]='getConnDefaults'>
+                </ejs-diagram>                  
+                  <div id="jsmind_container"></div>
+                </ng-container>
+                <ng-template #noMeets>
+                    <h3>No Meetings Found</h3>
+                </ng-template>
+            </div>
+        </mat-card>
+    </div>

@@ -1,0 +1,140 @@
+<div class="p-2">
+    <!-- <app-tiles></app-tiles> -->
+    <div fxLayout="row wrap">
+        <div fxFlex="50" fxFlex.xl="14.2" fxFlex.lg="14.2" fxFlex.md="33.3" fxFlex.sm="33.3" class="p-2">
+            <mat-card (click)="showReportData('total')" class="gradient-orange tile p-2">
+                <mat-icon>timeline</mat-icon>
+                <h2>{{data_count.total}}</h2>
+                <p>Total</p>
+            </mat-card>
+        </div>
+        <div fxFlex="50" fxFlex.xl="14.2" fxFlex.lg="14.2" fxFlex.md="33.3" fxFlex.sm="33.3" class="p-2">
+            <mat-card (click)="showReportData('entry')" class="gradient-green tile p-2">
+                <mat-icon>arrow_downward</mat-icon>
+                <h2>{{data_count.entry}}</h2>
+                <p>Entry</p>
+            </mat-card>
+        </div>
+        <div fxFlex="50" fxFlex.xl="14.2" fxFlex.lg="14.2" fxFlex.md="33.3" fxFlex.sm="33.3" class="p-2">
+            <mat-card (click)="showReportData('exit')" class="gradient-red tile p-2">
+                <mat-icon>arrow_upward</mat-icon>
+                <h2>{{data_count.exit}}</h2>
+                <p>Exit</p>
+            </mat-card>
+        </div>
+        <div fxFlex="50" fxFlex.xl="14.2" fxFlex.lg="14.2" fxFlex.md="33.3" fxFlex.sm="33.3" class="p-2">
+            <mat-card (click)="showReportData('recurring')" class="gradient-pink tile p-2">
+                <mat-icon>autorenew</mat-icon>
+                <h2>{{data_count.recurring}}</h2>
+                <p>Recurring</p>
+            </mat-card>
+        </div>
+        <div fxFlex="50" fxFlex.xl="14.2" fxFlex.lg="14.2" fxFlex.md="33.3" fxFlex.sm="33.3" class="p-2">
+            <mat-card (click)="showReportData('taxi')" class="gradient-gray tile p-2">
+                <mat-icon>local_taxi</mat-icon>
+                <h2>{{data_count.taxi}}</h2>
+                <p>Taxi</p>
+            </mat-card>
+        </div>
+        <div fxFlex="50" fxFlex.xl="14.2" fxFlex.lg="14.2" fxFlex.md="33.3" fxFlex.sm="33.3" class="p-2">
+            <mat-card (click)="showReportData('private')" class="gradient-brown tile p-2">
+                <mat-icon>directions_car</mat-icon>
+                <h2>{{data_count.private}}</h2>
+                <p>Private</p>
+            </mat-card>
+        </div>
+        <div fxFlex="50" fxFlex.xl="14.2" fxFlex.lg="14.2" fxFlex.md="33.3" fxFlex.sm="33.3" class="p-2">
+            <mat-card (click)="showReportData('unidentified')" class="gradient-lime tile p-2">
+                <mat-icon>live_help</mat-icon><!-- multiline_chart -->
+                <h2>{{data_count.unidentified}}</h2>
+                <p>Unidentified</p>
+            </mat-card>
+        </div>
+    </div>
+    <app-information-cards></app-information-cards>
+    <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="40" class="p-2">
+            <app-trackingvehicle></app-trackingvehicle>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="60" class="p-2">
+            <app-todo></app-todo>
+        </div>
+    </div>
+    <div fxLayout="row wrap">
+        <mat-card fxFlex="100">
+            <mat-card-header fxLayoutAlign="center">
+                <h2 fxFlex="50" style="color: rgba(0, 0, 0, 0.54);text-align: left;margin-top: 6px;">Car vs Bike
+                </h2>
+                <mat-form-field fxFlex="20" style="margin-top: -10px;margin-right: 40px;">
+                    <input matInput [matDatepicker]="picker" name="date" (click)="picker.open()" [(ngModel)]="data.date"
+                        [max]="maxDate" (dateChange)="onDate($event)" [max]="maxDate" placeholder="Select Date"
+                        autocomplete="off">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field fxFlex="20" style="margin-top: -10px;margin-right: 40px;">
+                    <mat-label>Select Type</mat-label>
+                    <mat-select [(ngModel)]="data.type" name="type" #type="ngModel"
+                        (selectionChange)="selectCategory(data)">
+                        <mat-option *ngFor="let list of analysisData" [value]="list.value">
+                            {{list.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </mat-card-header>
+            <mat-card-content>
+                <div fxFlex="100" fxFlex.gt-sm="100" class="p-2">
+                    <mat-card class="gradient-green p-0">
+                        <mat-card-content>
+                            <div class="w-100 h-400p" #resizedDiv style="text-align: -webkit-center;">
+                                <div class="uploader-status" *ngIf="loading_graph == true" style="padding-top: 13%;">
+                                    <mat-progress-spinner style="top: 40%;" mode="indeterminate"></mat-progress-spinner>
+                                </div>
+                                <ngx-charts-line-chart *ngIf="loading_graph == false" [scheme]="colorScheme"
+                                    [results]="analytics" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis"
+                                    [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+                                    [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+                                    [yAxisLabel]="yAxisLabel" [autoScale]="autoScale" [roundDomains]="roundDomains"
+                                    (select)="onSelectGraph($event)">
+                                </ngx-charts-line-chart>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-2">
+            <!-- <app-disk-space></app-disk-space> -->
+            <mat-card>
+                <mat-card-header fxLayoutAlign="center">
+                    <h3 fxFlex="50" style="color: rgba(0, 0, 0, 0.54);text-align: left;margin-top: 6px;">Daily Graph
+                    </h3>
+                    <mat-form-field fxFlex="50" style="margin-top: -10px;">
+                        <input type="text" placeholder="Search Vehicle No." [(ngModel)]="vehicle_reg_no" matInput
+                            autocomplete="off">
+                        <mat-icon (click)="vehicleDataChanged(vehicle_reg_no)" style="cursor: pointer;" matSuffix>search
+                        </mat-icon>
+                    </mat-form-field>
+                </mat-card-header>
+                <mat-card-content>
+                    <div fxLayout="row" fxLayoutAlign="space-around">
+                        <mat-checkbox color="primary" class="example-margin" [checked]="explodeSlices_disk"
+                            (change)="explodeSlices_disk = !explodeSlices_disk">Explode Slices</mat-checkbox>
+                        <mat-checkbox color="primary" class="example-margin" [checked]="showLabels_disk"
+                            (change)="showLabels_disk = !showLabels_disk">Show Labels</mat-checkbox>
+                    </div>
+                    <div class="w-100 h-300p" #resizedDiv>
+                        <ngx-charts-pie-chart [scheme]="colorScheme_disk" [results]="data_disk"
+                            [legend]="showLegend_disk" [explodeSlices]="explodeSlices_disk" [labels]="showLabels_disk"
+                            [doughnut]="doughnut_disk" [gradient]="gradient_disk" (select)="onSelectDisk($event)">
+                        </ngx-charts-pie-chart>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    
+</div>

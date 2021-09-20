@@ -1,0 +1,9 @@
+<agm-map [latitude]="lat" [longitude]="long" [zoom]="zoomSize">
+    <agm-marker *ngFor="let map of mapList" [latitude]="map.lat" [longitude]="map.long"
+        [animation]="'DROP'" (dragEnd)="markerChange($event)" [markerDraggable]="false"
+        [label]="map.company_location">
+    </agm-marker>
+    <agm-circle *ngFor="let m of mapList" [latitude]="m.lat" [longitude]="m.long"
+        [radius]="1000" [fillColor]="'red'" [circleDraggable]="false" [editable]="false">
+    </agm-circle>
+</agm-map>

@@ -1,0 +1,128 @@
+<div id="main" perfectScrollbar (psScrollY)="onPsScrollY($event)" class="h-100" style="background-color: #303030;
+color: white;">
+
+    <header class="header" [class.over]="showInfoContent">
+
+        <mat-toolbar class="top-toolbar" [class.mat-elevation-z2]="settings.fixedHeader">
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <a routerLink="/main-dashboard" fxLayout="row" fxLayoutAlign="start center" class="logo"
+                        ngClass.xs="mobile" (click)="closeSubMenus()">
+                        <img src="assets/img/mainlogo.svg" alt="logo">
+                        <span class="mx-2" style="color: #424242;"> | ANPR</span>
+                    </a>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="end center">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxShow="false" fxShow.gt-xs class="search-bar">
+                        <form method="get">
+                            <input type="text" placeholder="Type to search..." class="mat-elevation-z3"
+                                [class.show]="toggleSearchBar">
+                            <button mat-icon-button (click)="toggleSearchBar = !toggleSearchBar" type="button">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </form>
+                    </div>
+                    <app-fullscreen></app-fullscreen>
+                    <app-applications fxShow="false" fxShow.gt-sm></app-applications>
+                    <app-user-menu></app-user-menu>
+                </div>
+            </div>
+        </mat-toolbar>
+    </header>
+    <mat-drawer-container class="page-wrapper">
+        <div class="mat-drawer-container">
+            <div class="users-wrapper p-2">
+                <div style="margin-top: 2px; margin-bottom: 5px" color="primary" fxLayout="row"
+                    fxLayoutAlign="space-between center" class="px-2 user-toolbar">
+                    <div fxLayout="row">
+                        <button mat-icon-button (click)="openCompanyDialog('')">
+                            <mat-icon matTooltip="Add Company">create_new_folder</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="openCameraDialog('')">
+                            <mat-icon matTooltip="Camera Access">camera_enhance</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="showSearch = !showSearch" class="mx-2">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </div>
+                    <form class="user-search" [class.show]="showSearch">
+                        <mat-form-field class="user-search-input">
+                            <input matInput autocomplete="off" placeholder="Search company by name..."
+                                [(ngModel)]="searchText" name="search">
+                        </mat-form-field>
+                    </form>
+                </div>
+                <div fxLayout="row wrap">
+                    <div *ngFor="let list of companyList | CompanySearchPipe : searchText" fxFlex="100"
+                        fxFlex.gt-md="33.3" fxFlex.md="50" fxFlex.sm="50" class="p-2">
+                        <mat-card fxLayout="row" class="p-0 user-content">
+                            <div fxFlex="35" fxLayout="column" fxLayoutAlign="center center" class="bg-primary dashboard_company"
+                                [routerLink]="['/dashboard']" (click)="showDashboard(list)" [ngStyle]="styleObject(list)" >
+                                <div class="user-img">
+                                    <!-- <img [src]="(path+list.company_logo)" class="transition mb-2"> -->
+                                    <img [src]="getLogo(list.company_logo)" class="transition mb-2">
+                                </div>
+                            </div>
+                            <div fxFlex="65" class="user-details">
+                                <div fxLayout="row" fxLayoutAlign="space-between center">
+                                    <h4 class="user-name px-2" (click)="showDashboard(list)" [routerLink]="['/dashboard']">{{list.company_name}}</h4>
+
+                                    <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                </div>
+                                <mat-menu #menu="matMenu" xPosition="before" overlapTrigger="true">
+                                    <span (mouseleave)="menuTrigger.closeMenu()">
+
+                                        <button mat-menu-item (click)="openCamera(list)">
+                                            <mat-icon>list_alt</mat-icon>
+                                            <span>Camera Details</span>
+                                        </button>
+                                        <button mat-menu-item (click)="uploadImage(list)">
+                                            <mat-icon>cloud_upload</mat-icon>
+                                            <span>Upload Logo</span>
+                                        </button>
+                                        <!-- <button mat-menu-item (click)="openCompanyDialog(list)">
+                                            <mat-icon>mode_edit</mat-icon>
+                                            <span>Edit</span>
+                                        </button> -->
+                                        <button mat-menu-item (click)="deleteCompany(list);">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Delete</span>
+                                        </button>
+                                    </span>
+                                </mat-menu>
+                                <mat-divider></mat-divider>
+                                <div class="info-list mx-2">
+                                    <p fxLayout="row" fxLayoutAlign="start center">
+                                        <mat-icon class="secondary-text-color">business</mat-icon>
+                                        <span>{{list.company_location}}</span>
+                                    </p>
+                                    <p fxLayout="row" fxLayoutAlign="start center">
+                                        <mat-icon class="secondary-text-color">event_available</mat-icon>
+                                        <span>{{list.company_added_time | date:"dd MMMM, yyyy 'at' HH:mm"}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+                <!-- <div *ngIf="companyList" fxLayout="row wrap">
+                    <div fxFlex="100" class="p-2">
+                        <mat-card class="p-0 text-center">
+                            <pagination-controls class="annular-pagination" autoHide="false" maxSize="3"
+                                (pageChange)="onPageChanged($event)"></pagination-controls>
+                        </mat-card>
+                    </div>
+                </div> -->
+                <div *ngIf="!companyList" fxLayout="column" fxLayoutAlign="center center" class="user-spinner">
+                    <mat-spinner color="warning"></mat-spinner>
+                </div>
+            </div>
+        </div>
+    </mat-drawer-container>
+    <!-- <mat-toolbar color="primary" class="footer" [class.full-width]="!showSidenav">
+        <span style="font-size: 15px">Designed & Developed by DigiTele Networks Private Limited.</span>
+    </mat-toolbar> -->
+</div>

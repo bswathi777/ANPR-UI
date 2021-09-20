@@ -1,0 +1,54 @@
+<div fxLayout="row wrap" #resizedDiv>
+    <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="50" class="p-2">
+        <mat-card>
+            <mat-card-header fxLayoutAlign="left center">
+                <mat-card-subtitle>
+                    <h5 class="heading">Daily</h5>
+                </mat-card-subtitle>
+            </mat-card-header> 
+            <div class="w-100 h-300p" style="text-align: -webkit-center;" #resizedDiv>
+                <mat-progress-spinner style="top: 25%;" *ngIf="loading_daily == true" color="primary" mode="indeterminate"></mat-progress-spinner>
+                <ngx-charts-bar-vertical *ngIf="loading_daily == false" [scheme]="colorScheme" [gradient]="gradient" [xAxis]="showXAxis"
+                    [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="" [showYAxisLabel]=""
+                    [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [results]="dailyReports"
+                    (select)="onSelectDaily($event)">
+                </ngx-charts-bar-vertical>
+            </div>
+        </mat-card>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="34" fxFlex.sm="50" class="p-2">
+        <mat-card fxFlex="100">
+            <mat-card-header fxLayoutAlign="left center">
+                <mat-card-subtitle>
+                    <h5 class="heading">Monthly</h5>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="w-100 h-300p" style="text-align: -webkit-center;" #resizedDiv>
+                        <mat-progress-spinner style="top: 25%;" *ngIf="loading_monthly == true" color="primary" mode="indeterminate"></mat-progress-spinner>
+                    <ngx-charts-bar-vertical *ngIf="loading_monthly == false" [scheme]="colorScheme" [gradient]="gradient" [xAxis]="showXAxis"
+                        [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="" [showYAxisLabel]=""
+                        [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [results]="monthlyReports">
+                    </ngx-charts-bar-vertical>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="50" class="p-2">
+        <mat-card>
+            <mat-card-header fxLayoutAlign="left center">
+                <mat-card-subtitle>
+                    <h5 class="heading">Yearly</h5>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <div class="w-100 h-300p" style="text-align: -webkit-center;" #resizedDiv>
+                    <mat-progress-spinner style="top: 25%;" *ngIf="loading_yearly == true" color="primary" mode="indeterminate"></mat-progress-spinner>
+                <ngx-charts-bar-vertical *ngIf="loading_yearly == false" [scheme]="colorScheme" [gradient]="gradient" [xAxis]="showXAxis"
+                    [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="" [showYAxisLabel]=""
+                    [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [results]="yearlyReports">
+                </ngx-charts-bar-vertical>
+            </div>
+        </mat-card>
+    </div>
+</div>

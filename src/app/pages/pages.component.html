@@ -1,0 +1,142 @@
+<div id="main" class="h-100">
+
+    <header class="header" [class.over]="showInfoContent">
+        <!-- <app-top-info-content [showInfoContent]="showInfoContent" (onCloseInfoContent)="closeInfoContent(showInfoContent)"></app-top-info-content> -->
+
+        <mat-toolbar class="top-toolbar" [class.mat-elevation-z2]="settings.fixedHeader">
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <a routerLink="/main-dashboard" fxLayout="row" fxLayoutAlign="start center" class="logo"
+                        ngClass.xs="mobile" (click)="closeSubMenus()">
+                        <img [src]="getLogo()" alt="logo">
+                        <span class="mx-2" style="color: #424242"> | ANPR</span>
+                    </a>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center center">
+
+
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
+                    <button *ngIf="settings.menu == 'vertical'" mat-icon-button (click)="sidenav.toggle()">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+
+                    <button *ngIf="settings.menu == 'vertical'" mat-icon-button
+                        (click)="settings.sidenavIsPinned = !settings.sidenavIsPinned" fxShow="false" fxShow.gt-xs>
+                        <svg class="pin">
+                            <path *ngIf="!settings.sidenavIsPinned"
+                                d="M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12Z" />
+                            <path *ngIf="settings.sidenavIsPinned"
+                                d="M2,5.27L3.28,4L20,20.72L18.73,22L12.8,16.07V22H11.2V16H6V14L8,12V11.27L2,5.27M16,12L18,14V16H17.82L8,6.18V4H7V2H17V4H16V12Z" />
+                        </svg>
+                    </button>
+
+                </div>
+                <div fxLayout="row" fxLayoutAlign="end center">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxShow="false" fxShow.gt-xs class="search-bar">
+                        <span class="mx-2 branch">Location: {{branchname}}</span>
+                        <!-- <form method="get">
+                            <input type="text" placeholder="Type to search..." class="mat-elevation-z3"
+                                [class.show]="toggleSearchBar">
+                            <button mat-icon-button (click)="toggleSearchBar = !toggleSearchBar" type="button">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </form> -->
+                    </div>
+                    <app-fullscreen></app-fullscreen>
+                    <app-applications fxShow="false" fxShow.gt-sm></app-applications>
+                    <app-messages fxShow="false" fxShow.gt-xs></app-messages>
+                    <app-user-menu></app-user-menu>
+                </div>
+            </div>
+        </mat-toolbar>
+    </header>
+
+    <div class="main h-100" perfectScrollbar (psScrollY)="onPsScrollY($event)">
+
+        <mat-drawer-container class="page-wrapper">
+
+            <mat-drawer #sidenav *ngIf="settings.menu == 'vertical'" [opened]="settings.sidenavIsOpened"
+                [mode]="(settings.sidenavIsPinned) ? 'side' : 'over'" (openedStart)="showSidenav = !showSidenav"
+                (closedStart)="showSidenav = !showSidenav" class="sidenav mat-elevation-z6" autoFocus="false">
+                <mat-toolbar *ngIf="settings.fixedSidenav" class="top-toolbar">
+                    <a routerLink="/dashboard" fxLayout="row" fxLayoutAlign="start center" class="logo">
+                        <img src="assets/img/mainlogo.svg" alt="logo">
+                        <span class="mx-2">| ANPR</span>
+                    </a>
+                </mat-toolbar>
+
+                <app-sidenav></app-sidenav>
+            </mat-drawer>
+
+            <mat-drawer-content>
+
+                <mat-toolbar *ngIf="settings.menu == 'horizontal'" class="horizontal-menu px-0">
+                    <div fxLayout="row" fxLayoutAlign="center center" class="w-100">
+                        <app-horizontal-menu [menuParentId]="0" [class.w-100]="(settings.menuType!='mini')">
+                        </app-horizontal-menu>
+                    </div>
+                </mat-toolbar>
+                <!-- <div style="margin-top: 56px;"></div> -->
+                <router-outlet></router-outlet>
+
+            </mat-drawer-content>
+
+            <mat-drawer #options position="end" class="options">
+                <div fxLayout="row" fxLayoutAlign="space-between center" class="op-header mat-elevation-z1">
+                    <h2>Activity Log</h2>
+                    <button mat-icon-button (click)="options.toggle()" class="ml-2">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+                <div [perfectScrollbar]="optionsPsConfig">
+                    <div fxLayout="column" class="control">
+
+                        <pagination-controls style="text-align: left; font-size: 13px;"
+                            (pageChange)="pageChanged($event)">
+                        </pagination-controls>
+
+                        <mat-card style="box-shadow: none; padding: inherit;"
+                            *ngFor="let activitylogupdate of activityLog | paginate: config">
+                            <div fxLayout="column">
+                                <div fxFlex="100">
+                                    <p style="font-size:15px; color:#00A34E">
+                                        <span><i class="material-icons" style="font-size:14px;">person</i></span>
+                                        <span>{{activitylogupdate?.username | titlecase}}</span>
+                                    </p>
+                                    <p style="font-size:13px;margin-top: 3px;">
+                                        <i class="material-icons" style="font-size:14px;">
+                                            access_time
+                                        </i> <span>
+                                            {{activitylogupdate?.timestamp | date:'MMM dd, y hh:mm a'}}</span></p>
+                                    <p style="font-size:13px;">
+                                        {{activitylogupdate?.message}}</p>
+                                </div>
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+
+
+            </mat-drawer>
+        </mat-drawer-container>
+
+        <div fxLayout="row" fxLayoutAlign="center center" class="options-icon" (click)="options.toggle()">
+            <mat-icon>arrow_back_ios</mat-icon>
+        </div>
+
+        <div #backToTop fxLayout="row" fxLayoutAlign="center center" class="back-to-top" (click)="scrollToTop()">
+            <mat-icon>arrow_upward</mat-icon>
+        </div>
+
+        <mat-toolbar color="primary" class="footer" style="flex-flow: row-reverse;" [class.full-width]="!showSidenav">
+            <div fxLayout="row" fxLayoutAlign="right center">
+                <span style="font-size: 14px;color:#555;">Designed & Developed by</span>
+                <span style="text-align:center;"><img src="assets/img/footer_logo.svg" style="height: 40px;margin-left: -6px;"></span>
+            </div>
+        </mat-toolbar>
+    </div>
+    <!-- <app-content-header [icon]="'format_line_spacing'" [title]="'Reports'" [hasBgImage]="true">
+    </app-content-header> -->
+
+</div>

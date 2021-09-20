@@ -1,0 +1,37 @@
+<app-content-header [icon]="'format_line_spacing'" [title]="'Reports'" [hideBreadcrumb]="false" [hasBgImage]="true">
+</app-content-header>
+
+<div fxLayout="column" fxLayout.gt-sm="row wrap" class="frugalmap p-2">
+    <mat-card class="mat-card p-2" style="width: 100%;">
+        <div class="" style="display: flex">
+            <div fxFlex="35" class="px-1">
+                <div fxFlex="85">
+                    <label>
+                        <p style="font-size: 13px;color: #616161;margin-left: 0px;">Select Date & Time Range:</p>
+                        <input matInput style="width:100%;border-bottom: 1px solid #949494;"
+                            [(ngModel)]="data.range" [owlDateTimeTrigger]="dt10" [owlDateTime]="dt10"
+                            [selectMode]="'range'" (dateTimeChange)="onDate($event)">
+                        <owl-date-time #dt10 setClass="dt10"></owl-date-time>
+                    </label>
+                    <!-- <mat-error *ngIf="date.hasError('matDatepickerParse')">this is not a valid date.</mat-error> -->
+                </div>
+            </div>
+            <div fxFlex="45" class="px-1">
+                <label>
+                    <p style="font-size: 13px;color: #616161;margin-left: 8px;">Type:</p>
+                    <mat-checkbox class="example-margin" [checked]="noMask" (change)="NoMask($event)">No Mask
+                    </mat-checkbox>
+                    <mat-checkbox class="example-margin" [checked]="noSocialDistance"
+                        (change)="NoSocialDistance($event)">No Social Distance
+                    </mat-checkbox>
+                </label>
+            </div>
+            <div fxFlex="20" class="px-1">
+                <button mat-raised-button color="primary" (click)="sendReport()">Send Report</button>
+            </div>
+        </div>
+    </mat-card>
+</div>
+
+<app-covid-current-reports [covidList]="covidList" [showPagination]="true" [totalSize]="totalSize"
+    (onPageChange)="PageChange($event)"></app-covid-current-reports>

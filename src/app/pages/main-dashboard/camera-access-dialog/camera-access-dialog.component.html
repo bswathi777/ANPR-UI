@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>Access Camera</h1>
+<form class="user-form" #f="ngForm" (submit)="addCameraForm(f)">
+  <div mat-dialog-content>
+    <div fxLayout="column" class="form-field-outer">
+      <mat-form-field class="example-full-width">
+        <input type="text" name="username" placeholder="User" matInput [formControl]="myControl"
+          [(ngModel)]="data.username" (ngModelChange)="dataChanged($event)" [matAutocomplete]="auto">
+
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let option of users | async" [value]="option.usename">
+            <span style="font-size: 15px; font-weight: 500;">{{option.usename}} - </span>
+            <span style="font-size: 13px; font-weight: 300;">{{option.work_email}} </span>
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="(myControl.errors && myControl.touched)">
+          <small *ngIf="myControl.errors?.required" class="haserror">
+            Username is required
+          </small>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-select placeholder="Select Company" name="company" #company_name="ngModel" [(ngModel)]="data.company_name"
+          (selectionChange)="companyData(data)" multiple>
+          <mat-option *ngFor="let topping of companyLists" [value]="topping.id">{{topping.company_name}} -
+            {{topping.company_location}}</mat-option>
+        </mat-select>
+        <!-- <mat-error *ngIf="(company_name.errors && company_name.touched || f.submitted)">
+          <small *ngIf="company_name.errors?.required" class="haserror">
+            This field is required
+          </small>
+        </mat-error> -->
+      </mat-form-field>
+      <!-- <section class="example-section">
+        <mat-checkbox class="example-margin" (change)="setAllCompany($event)">Select All Companys</mat-checkbox>
+    </section> -->
+      <mat-form-field class="example-full-width">
+        <mat-select placeholder="Select Camera" name="camera" [(ngModel)]="data.camera_location"
+          #camera_location="ngModel" multiple>
+          <mat-option *ngFor="let topping of cameraLists" [value]="topping.id">{{topping.camera_location}} </mat-option>
+        </mat-select>
+        <!-- <mat-error *ngIf="(camera_location.errors && camera_location.touched || f.submitted)">
+                  <small *ngIf="camera_location.errors?.required" class="haserror">
+                      This field is required
+                  </small>
+              </mat-error> -->
+      </mat-form-field>
+      <!-- <mat-checkbox [(ngModel)]="selectall" (ngModelChange)="selectalllang()" >All</mat-checkbox>  -->
+      <section class="example-section">
+        <mat-checkbox class="example-margin" (change)="setAllCameras($event)">Select All Cameras</mat-checkbox>
+      </section>
+    </div>
+  </div>
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-raised-button color="primary"
+      (click)="insertUserCompany(data)">Submt</button>
+    <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+  </div>
+</form>

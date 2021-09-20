@@ -1,0 +1,49 @@
+<div fxLayout="row wrap" #resizedDiv>
+    <ng-container *ngIf="!showInformationCards">
+    <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50" class="p-2">
+        <mat-card>
+            <mat-card-header fxLayoutAlign="left center">
+                <mat-card-subtitle>
+                    <h5 class="heading">Daily</h5>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <div class="w-100 h-300p" style="text-align: -webkit-center;" #resizedDiv>
+                <app-covid-daily-chart [chatTheme]="'fusion'" [covidDailyUpdate]="covidDailyUpdate" [type]="'mscolumn2d'" [renderChart]="'dailyInfo'"></app-covid-daily-chart>
+            </div>
+        </mat-card>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50" class="p-2">
+        <mat-card fxFlex="100">
+            <mat-card-header fxLayoutAlign="left center">
+                <mat-card-subtitle>
+                    <h5 class="heading">Monthly</h5>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="w-100 h-300p" style="text-align: -webkit-center;" #resizedDiv>
+                    <app-covid-monthly-chart [chatTheme]="'fusion'" [covidMonthlyUpdate]="covidMonthlyUpdate" [type]="'mscolumn2d'" [renderChart]="'monthlyInfo'"></app-covid-monthly-chart>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    </ng-container>
+    <!-- <ng-template #dailyMeets>
+    <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" class="p-2">
+        <mat-card>
+            <mat-card-header fxLayoutAlign="left center">
+                <mat-card-subtitle>
+                    <h5 class="heading">Daily Meets</h5>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <div class="w-100 h-300p" style="text-align: -webkit-center;" #resizedDiv>
+                <ejs-diagram #diagram id="diagram" [getNodeDefaults]=getNodeDefaults
+                    [snapSettings]=snapSettings [selectedItems]="selectedItems" [getCustomTool]='getCustomTool'
+                    (selectionChange)="selectionChange($event)" (created)="create($event)" [tool]=tool [layout]='layout'
+                    [dataSourceSettings]='data' [getConnectorDefaults]='getConnDefaults'>
+                </ejs-diagram>                  
+                  <div id="jsmind_container"></div>
+            </div>
+        </mat-card>
+    </div>
+    </ng-template> -->
+</div>

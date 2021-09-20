@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Live</h1>
+<div mat-dialog-content>
+    <div fxLayout="column" class="form-field-outer">
+        <video id="test_video" controls autoplay src="safeUrl"></video>
+    </div>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+</div>

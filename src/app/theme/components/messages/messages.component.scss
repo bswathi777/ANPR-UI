@@ -1,0 +1,35 @@
+.messages{
+    .content{
+        padding: 0;
+        height: 260px;
+    }
+    span.name{
+        text-transform: capitalize;
+        font-size: 13px;
+        line-height: 22px;
+    }
+    span.info{
+        font-size: 12px;
+        opacity: 0.8;
+        line-height: 22px;
+    }
+    span.text{
+        font-size: 11px;
+        line-height: 14px;
+        white-space: initial;
+        text-align: left;
+    }
+    .mat-button{
+        padding: 8px;
+        .mat-icon{
+            height: 16px;
+            font-size: 12px;
+            width: 12px;
+            vertical-align: middle;
+        }
+    }
+}
+
+::ng-deep .mat-menu-panel {
+    min-width: 320px;
+}

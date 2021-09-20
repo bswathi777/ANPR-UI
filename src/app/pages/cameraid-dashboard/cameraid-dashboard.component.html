@@ -1,0 +1,129 @@
+<div id="main" perfectScrollbar (psScrollY)="onPsScrollY($event)" class="h-100" style="background-color: #303030;
+color: white;">
+
+    <header class="header" [class.over]="showInfoContent">
+
+        <mat-toolbar class="top-toolbar" [class.mat-elevation-z2]="settings.fixedHeader">
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <a routerLink="/main-dashboard" fxLayout="row" fxLayoutAlign="start center" class="logo"
+                        ngClass.xs="mobile" (click)="closeSubMenus()">
+                        <img src="assets/img/mainlogo.svg" alt="logo">
+                        <span class="mx-2" style="color: #424242;">ANPR</span>
+                    </a>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="end center">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxShow="false" fxShow.gt-xs class="search-bar">
+                        <form method="get">
+                            <input type="text" placeholder="Type to search..." class="mat-elevation-z3"
+                                [class.show]="toggleSearchBar">
+                            <button mat-icon-button (click)="toggleSearchBar = !toggleSearchBar" type="button">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </form>
+                    </div>
+                    <app-fullscreen></app-fullscreen>
+                    <app-applications fxShow="false" fxShow.gt-sm></app-applications>
+                    <app-user-menu></app-user-menu>
+                </div>
+            </div>
+        </mat-toolbar>
+    </header>
+    <mat-drawer-container class="page-wrapper">
+        <div class="mat-drawer-container">
+            <div class="users-wrapper p-2">
+                <div style="margin-top: 2px; margin-bottom: 5px" color="primary" fxLayout="row"
+                    fxLayoutAlign="space-between center" class="px-2 user-toolbar">
+                    <div fxLayout="row">
+                        <button mat-icon-button routerLink="/main-dashboard">
+                            <mat-icon class="material-icons color_red">arrow_back</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="openCameraDialog('')">
+                            <mat-icon>add_circle_outline</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="showSearch = !showSearch" class="mx-2">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </div>
+                    <form class="user-search" [class.show]="showSearch">
+                        <mat-form-field class="user-search-input">
+                            <input matInput placeholder="Search camera by name..." [(ngModel)]="searchText"
+                                name="search">
+                        </mat-form-field>
+                    </form>
+
+
+                </div>
+
+                <div fxLayout="row wrap">
+
+                    <div *ngFor="let list of cameraList | CameraSearchPipe : searchText" fxFlex="100"
+                        fxFlex.gt-md="33.3" fxFlex.md="50" fxFlex.sm="50" class="p-2">
+                        <mat-card fxLayout="row" class="p-0 user-content">
+
+                            <div fxFlex="100" class="user-details">
+                                <div fxLayout="row" fxLayoutAlign="space-between center">
+                                    <h4 class="user-name px-2" style="cursor: pointer;"
+                                        [routerLink]="['/main-dashboard']">
+                                        {{list.camera_location}}</h4>
+
+                                    <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                </div>
+                                <mat-menu #menu="matMenu" xPosition="before" overlapTrigger="true">
+                                    <span (mouseleave)="menuTrigger.closeMenu()">
+                                        <button mat-menu-item (click)="openCameraDialog(list)">
+                                            <mat-icon>mode_edit</mat-icon>
+                                            <span>Edit</span>
+                                        </button>
+                                        <button mat-menu-item (click)="deleteCamera(list);">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Delete</span>
+                                        </button>
+                                    </span>
+                                </mat-menu>
+                                <mat-divider></mat-divider>
+                                <div class="info-list mx-2">
+                                    <p fxLayout="row" fxLayoutAlign="start center">
+                                        <mat-icon class="secondary-text-color" matTooltip="Company Name">business
+                                        </mat-icon>
+                                        <span>{{list.company_name}}</span>
+                                    </p>
+                                    <p fxLayout="row" fxLayoutAlign="start center">
+                                        <mat-icon class="secondary-text-color" matTooltip="Camera Name">control_camera
+                                        </mat-icon>
+                                        <span>{{list.camera_name}}</span>
+                                    </p>
+                                    <p fxLayout="row" fxLayoutAlign="start center">
+                                        <mat-icon class="secondary-text-color" matTooltip="Camera ID">videocam
+                                        </mat-icon>
+                                        <span>{{list.camera_id}}</span>
+                                    </p>
+                                    <p fxLayout="row" fxLayoutAlign="start center">
+                                        <mat-icon class="secondary-text-color" matTooltip="Camera IP">ondemand_video
+                                        </mat-icon>
+                                        <span>{{list.camera_ip}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+
+                <!-- <div *ngIf="cameraList" fxLayout="row wrap">
+                    <div fxFlex="100" class="p-2">
+                        <mat-card class="p-0 text-center">
+                            <pagination-controls class="annular-pagination" autoHide="false" maxSize="3"
+                                (pageChange)="onPageChanged($event)"></pagination-controls>
+                        </mat-card>
+                    </div>
+                </div> -->
+                <div *ngIf="!cameraList" fxLayout="column" fxLayoutAlign="center center" class="user-spinner">
+                    <mat-spinner color="warning"></mat-spinner>
+                </div>
+            </div>
+        </div>
+    </mat-drawer-container>
+</div>

@@ -1,0 +1,18 @@
+<div class="content">
+    <form class="example-form" (ngSubmit)="onSubmit()">
+      <div class="mat-subheading-2">Update comment </div>  
+       <!--  <mat-form-field>
+          <input type="text" name="vehicle_reg_no" placeholder="Vehicle Reg No." matInput [(ngModel)]="module.vehicle_reg_no" autocomplete="off" oninput="this.value = this.value.toUpperCase()">
+        </mat-form-field> -->
+        <mat-form-field>
+          <mat-label>Comment</mat-label>
+          <input type="text" name="comment" placeholder="Comment" matInput [(ngModel)]="module.vehicle_reg_no" autocomplete="off" oninput="this.value = this.value.toUpperCase()">
+        
+        </mat-form-field>
+        
+      <div class="actions" fxLayout="row" fxLayoutAlign="space-between center">
+        <button mat-button type="submit" color="primary" style="background-color:#bdbdbd;color:rgba(0, 0, 0, 0.87);">UPDATE <mat-spinner [diameter]="24" *ngIf="onSubmitLoading" style="float:right; margin: 5px 0px 0px 5px" ></mat-spinner></button>
+        <button mat-button type="button" color="primary" (click)="onCancel()" style="background-color:#f44336;color:#fff">CANCEL</button>
+      </div>
+    </form>
+    </div>

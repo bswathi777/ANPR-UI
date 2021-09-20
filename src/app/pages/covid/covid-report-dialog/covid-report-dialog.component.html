@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Send Email Report</h2>
+  <form [formGroup]="f" (submit)="subs()">
+    <mat-dialog-content class="mat-typography">
+      <!-- <mat-form-field> -->
+        <app-multi-select formControlName="selectedEmail" [emailInfo]="emailData" (emailInputString)="emailInputString($event)"></app-multi-select>
+      <!-- </mat-form-field> -->
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close style="background-color:#f44336;color:#fff">Cancel</button>
+      <button mat-button [mat-dialog-close]="true" cdkFocusInitial type="submit">Submit</button>
+    </mat-dialog-actions>
+  </form>

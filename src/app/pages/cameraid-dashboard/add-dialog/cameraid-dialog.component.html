@@ -1,0 +1,52 @@
+<h1 mat-dialog-title><span *ngIf="!data.id">Add</span><span *ngIf="data.id">Edit</span> Camera</h1>
+<div mat-dialog-content>
+    <form #f="ngForm" (submit)="addCameraForms(f)" class="user-form">
+        <div fxLayout="column" class="form-field-outer">
+            <mat-form-field class="w-100">
+                <input matInput name="camera_id" [(ngModel)]="data.camera_id" #camera_id="ngModel"
+                    placeholder="Enter Camera ID" required="true">
+                <mat-error *ngIf="(camera_id.errors && camera_id.touched || f.submitted)">
+                    <small *ngIf="camera_id.errors?.required" class="haserror">
+                        This field is required
+                    </small>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-100">
+                <input matInput name="camera_location" [(ngModel)]="data.camera_location" #camera_location="ngModel"
+                    placeholder="Enter Camera Location" required="true">
+                <mat-error *ngIf="(camera_location.errors && camera_location.touched || f.submitted)">
+                    <small *ngIf="camera_location.errors?.required" class="haserror">
+                        This field is required
+                    </small>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-100">
+                <input matInput name="camera_name" [(ngModel)]="data.camera_name" #camera_name="ngModel"
+                    placeholder="Enter Camera Name" required="true">
+                <mat-error *ngIf="(camera_name.errors && camera_name.touched || f.submitted)">
+                    <small *ngIf="camera_name.errors?.required" class="haserror">
+                        This field is required
+                    </small>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-100">
+                <input matInput name="camera_ip" [(ngModel)]="data.camera_ip" #camera_ip="ngModel"
+                    placeholder="Enter Camera IP" required="true">
+                <mat-error *ngIf="(camera_ip.errors && camera_ip.touched || f.submitted)">
+                    <small *ngIf="camera_ip.errors?.required" class="haserror">
+                        This field is required
+                    </small>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <!-- <button mat-raised-button color="primary" [disabled]="!f.valid"><span (click)="setSave(data)"
+            *ngIf="!data.id">Save</span><span (click)="setUpdate(data)" *ngIf="data.id">Update</span></button> -->
+    <button mat-raised-button color="primary" [disabled]="!f.valid" (click)="setSave(data)"
+        *ngIf="!data.id">Save</button>
+    <button mat-raised-button color="primary" [disabled]="!f.valid" (click)="setUpdate(data)"
+        *ngIf="data.id">Update</button>
+    <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+</div> 

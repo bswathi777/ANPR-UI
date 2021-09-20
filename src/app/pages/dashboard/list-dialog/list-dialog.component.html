@@ -1,0 +1,80 @@
+<div mat-dialog-title>
+  <p fxFlex="100" style="text-align: center;">
+    <span class="report_title"><b>{{title | uppercase}} REPORTS</b>&nbsp;- {{date | date: 'dd/MM/yyyy'}}</span>
+    <span></span>
+    <mat-icon class="close_btn" matTooltip="close" (click)="dialogClose()">highlight_off</mat-icon>
+  </p>
+</div>
+<div mat-dialog-content>
+
+  <div class="example-container">
+    <mat-table #table [dataSource]="anprList">
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.date | date: 'dd/MM/yyyy'}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="vehicle_status">
+        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <span class="al-items" matTooltip="Entry" *ngIf="entry_icon === element.vehicle_status; else elseif1">
+            <mat-icon class="material-icons color_green">arrow_downward</mat-icon>
+          </span>
+          <span class="al-items" matTooltip="Exit" #elseif1 *ngIf="exit_icon === element.vehicle_status">
+            <mat-icon class="material-icons color_red">arrow_upward</mat-icon>
+          </span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="vehicle_reg_no">
+        <mat-header-cell *matHeaderCellDef> Vehicle Reg Number </mat-header-cell>
+        <mat-cell *matCellDef="let element"><span (click)="openVehicleNoDialog(element)">
+            {{element.vehicle_reg_no | uppercase}} </span></mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="vehicle_type">
+        <mat-header-cell *matHeaderCellDef> Vehicle Type</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.vehicle | titlecase}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="vehicle_in_time">
+        <mat-header-cell *matHeaderCellDef> Time </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.vehicle_in_time | date: 'dd/MM/yyyy HH:mm:ss'}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="vehicle_image">
+        <mat-header-cell *matHeaderCellDef> Vehicle Image </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="p-1" style="cursor: pointer;">
+          <!-- <img (click)="openDialog(element)" src={{path+element.vehicle_image}} /> -->
+          <ngx-lazy-images [config]="config" [placeholder]="placeholderOne" class="vehicleimg"
+            [src]="path+element.vehicle_image" [height]="50" width="100" [alt]="'300X300'"
+            (click)="openDialog(element)">
+          </ngx-lazy-images>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="camera_location">
+        <mat-header-cell *matHeaderCellDef> Camera Location</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.camera_location}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="vehicle_licence_no">
+        <mat-header-cell *matHeaderCellDef> Vehicle Licence No</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.vehicle_licence_no}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="number_plate_image">
+        <mat-header-cell *matHeaderCellDef> Plate Image </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="p-1"> 
+          <!-- <img style="cursor: pointer;" (click)="openDialog1(element)" src={{path+element.number_plate_image}} /> -->
+          <ngx-lazy-images [config]="config" [placeholder]="placeholderOne" class="vehicleimg"
+            [src]="path+element.number_plate_image" [height]="50" width="100" [alt]="'300X300'"
+            (click)="openDialog(element)">
+          </ngx-lazy-images>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+      <mat-row *matRowDef="let row; let even = even; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <div class="no-results" *ngIf="anprList?.length == 0">
+      {{emptyData}}
+    </div>
+  </div>
+
+</div>
+<mat-paginator *ngIf="dataloading" [length]="totalRecords" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+  (page)="getVehicleList($event)">
+</mat-paginator>

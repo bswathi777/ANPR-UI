@@ -1,0 +1,23 @@
+.todo-list{
+    height: 314px;
+}
+
+.material-icons.color_green { color: #64DD17; }
+.material-icons.color_red { color: #D50000; }
+
+.mat-row:nth-child(even){
+    background-color:white;
+    }
+  
+  .mat-row:nth-child(odd){
+    background-color:#f5f5f5;
+    }
+
+    .no-results {
+      display: flex;
+      justify-content: center;
+      padding: 14px;
+      font-size: 14px;
+      font-style: italic;
+      background: #fff;
+      }

@@ -1,0 +1,101 @@
+<app-content-header [icon]="'format_line_spacing'" [title]="'Reports'" [hideBreadcrumb]="false" [hasBgImage]="true">
+</app-content-header>
+<div fxLayout="column" fxLayout.gt-sm="row wrap" class="frugalmap p-2">
+
+    <div style="width: 100%; text-align: right;margin-right: 18px;">
+        <!-- <mat-icon style="cursor: pointer;" matTooltip="Add Vehicle" matTooltipPosition="left" (click)="addVehicle()">
+            add</mat-icon> -->
+        <button mat-flat-button color="primary" (click)="addVehicle()" style="margin-right: 20px; margin-bottom: 10px;">
+            <mat-icon>add_circle</mat-icon>&nbsp;&nbsp;Add Vehicle
+        </button>
+    </div>
+</div>
+
+<div fxLayout="columns" class="p-1" fxlayout.gt-sm="row wrap" style="margin-top: -20px;">
+    <div class="example-container p-2" id="example-container">
+        <mat-table #table [dataSource]="dataSource">
+            <ng-container matColumnDef="vehicle_number">
+                <mat-header-cell *matHeaderCellDef> Vehicle Number </mat-header-cell>
+                <mat-cell *matCellDef="let element" style="cursor: pointer;" (click)="toggleRow(element)">
+                    {{element.vehicle_number | uppercase}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="group">
+                <mat-header-cell *matHeaderCellDef>Group</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.group}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="alert_event">
+                <mat-header-cell *matHeaderCellDef> Alert Event</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.alert_event }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="notification_type">
+                <mat-header-cell *matHeaderCellDef> Notification Type </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.notification_type}}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="mail_status">
+                <mat-header-cell *matHeaderCellDef> Mail Status </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.mail_status}}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="comments">
+                <mat-header-cell *matHeaderCellDef> Comments</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.comments}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                <mat-cell *matCellDef="let element" style="cursor: pointer;">
+                    <mat-icon class="material-icons color_red" (click)="deleteTracking(element)">delete_outline
+                    </mat-icon>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Expanded Content Column - The detail row is made up of this one column -->
+            <ng-container matColumnDef="expandedDetail">
+                <mat-cell *matCellDef="let detail">
+                    <mat-nav-list *ngIf="show_deleteemail == false" style="width: 40%;">
+                        <mat-list-item *ngFor="let email of detail.element.email">
+                            <a matLine>{{ email }}</a>
+                            <button mat-icon-button (click)="deleteEmail(detail.element, email)">
+                                <mat-icon class="material-icons color_red">delete_outline</mat-icon>
+                            </button>
+                        </mat-list-item>
+                    </mat-nav-list>
+
+                    <!-- <mat-spinner *ngIf="show_deleteemail == true" [diameter]="40" color="primary"> </mat-spinner> -->
+                    <mat-progress-bar *ngIf="show_deleteemail == true" class="example-margin" color="primary"
+                        [mode]="indeterminate">
+                    </mat-progress-bar>
+
+                    <!-- <h4 matSubheader>Email ID: </h4>
+                    <mat-list role="list" *ngFor="let email of detail.element.email">
+                        <mat-list-item role="listitem">{{email}}</mat-list-item>
+                    </mat-list> -->
+                    <!-- {{detail.element.vehicle_number}} -->
+                </mat-cell>
+
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; let even = even; columns: displayedColumns;" matRipple class="element-row">
+            </mat-row>
+            <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+                [@detailExpand]="row.element.show ? 'expanded' : 'collapsed'" style="overflow: hidden">
+            </mat-row>
+        </mat-table>
+
+        <div class="no-results" *ngIf="trackingListData.length == 0">
+            {{emptyData}}
+        </div>
+
+
+        <mat-paginator *ngIf="dataloading" [length]="totalRecords" [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions" (page)="getVehicleList($event)">
+        </mat-paginator>
+    </div>
+</div>

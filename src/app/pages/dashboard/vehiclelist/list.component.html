@@ -1,0 +1,56 @@
+<mat-card>
+    <mat-card-content>
+        <div fxLayoutAlign="space-between">
+            <mat-form-field class="w-100">
+                <input matInput (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('vehicle_reg_no')" 
+                placeholder="Type to filter all columns" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div perfectScrollbar class="todo-list">
+            <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="vehicle_in_time">
+                    <mat-header-cell *matHeaderCellDef> Date & Time </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.vehicle_in_time | date: 'dd/MM/yyyy HH:mm:ss'}}
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="vehicle_reg_no">
+                    <mat-header-cell *matHeaderCellDef> Vehicle Reg Number </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <div fxFlex="100" fxFlex.gt-sm="63">
+                            <span> {{element.vehicle_reg_no | uppercase}}</span>
+                        </div>
+                        <div fxFlex="100" fxFlex.gt-sm="10" style="float: right;">
+                            <span class="al-items" matTooltip="Entry"
+                                *ngIf="entry_icon === element.vehicle_status; else elseif1">
+                                <mat-icon class="material-icons color_green">arrow_downward</mat-icon>
+                            </span>
+                            <span class="al-items" matTooltip="Exit" #elseif1
+                                *ngIf="exit_icon === element.vehicle_status">
+                                <mat-icon class="material-icons color_red">arrow_upward</mat-icon>
+                            </span>
+                        </div>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="vehicle_image">
+                    <mat-header-cell *matHeaderCellDef> Vehicle Image </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <img class="vehicle_img" style="padding: 5px; cursor: pointer;" (click)="openDialog(element)"
+                            src={{path+element.vehicle_image}} />
+                        
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="number_plate_image">
+                    <mat-header-cell *matHeaderCellDef> Plate Image </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <img class="plate_img" style="padding: 5px;cursor: pointer;" (click)="openDialog1(element)" src={{path+element.number_plate_image}} /></mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+            <div class="no-results" *ngIf="dataSource1?.length == 0">
+                {{emptyData}}
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

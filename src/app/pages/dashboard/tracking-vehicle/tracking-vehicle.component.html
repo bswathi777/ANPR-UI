@@ -1,0 +1,52 @@
+<mat-card>
+    <mat-card-header fxLayoutAlign="center">
+        <h3 fxFlex="50" style="color: rgba(0, 0, 0, 0.54);text-align: left;margin-top: 6px;">Tracking Vehicle</h3>
+        <mat-form-field fxFlex="50" style="margin-top: -10px;">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Type to filter all columns"
+                autocomplete="off">
+        </mat-form-field>
+    </mat-card-header>
+    <mat-card-content>
+        <!-- <div fxLayoutAlign="space-between">
+            <mat-form-field class="w-100">
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Type to filter all columns"
+                    autocomplete="off">
+            </mat-form-field>
+        </div> -->
+        <div perfectScrollbar class="todo-list">
+            <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="vehicle_number">
+                    <mat-header-cell *matHeaderCellDef> Vehicle Number </mat-header-cell>
+                    <mat-cell *matCellDef="let element" (click)="openVehicleNoDialog(element)" style="cursor: pointer;">
+                        {{element.vehicle_number | uppercase}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="group">
+                    <mat-header-cell *matHeaderCellDef>Group</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.group}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="alert_event">
+                    <mat-header-cell *matHeaderCellDef> Alert Event</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <span class="al-items" matTooltip="Entry"
+                            *ngIf="entry_icon === element.alert_event; else elseif1">
+                            <mat-icon class="material-icons color_green">arrow_downward</mat-icon>
+                        </span>
+                        <span class="al-items" matTooltip="Exit" #elseif1 *ngIf="exit_icon === element.alert_event">
+                            <mat-icon class="material-icons color_red">arrow_upward</mat-icon>
+                        </span>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+            <div class="no-results" *ngIf="dataSource1?.length == 0">
+                {{emptyData}}
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

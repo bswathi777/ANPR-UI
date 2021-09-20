@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Live</h1>
+<div mat-dialog-content>
+    <div fxLayout="column" class="form-field-outer">
+        <!-- <mat-video [src]="safeUrl" style="width: 350px; height: 300px;"></mat-video> -->
+        <!-- <video id="test_video" controls autoplay src="rtsp://admin:12345@10.84.0.155:554/profile2"></video> -->
+        <video id="test_video" controls autoplay>
+            <source src="rtsp://admin:12345@10.84.0.155:554/profile2">
+        </video>
+    </div>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+</div>

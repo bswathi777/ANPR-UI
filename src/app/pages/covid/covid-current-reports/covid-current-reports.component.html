@@ -1,0 +1,65 @@
+<div fxLayout="row wrap" #resizedDiv>
+    <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" class="p-2">
+        <!-- <mat-card> -->
+        <div style="text-align: -webkit-center;" #resizedDiv>
+            <div fxLayout="columns" class="p-1" fxlayout.gt-sm="row wrap" style="margin-top: -15px; display: block">
+                <mat-table #table [dataSource]="covidList">
+                    <ng-container matColumnDef="date">
+                        <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                        <mat-cell *matCellDef="let element" data-label="date"> {{element.Date | date: 'dd/MM/yyyy'}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="time">
+                        <mat-header-cell *matHeaderCellDef>Time</mat-header-cell>
+                        <mat-cell *matCellDef="let element" data-label="time"> {{element.Date | date: 'HH:mm:ss' }}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="location">
+                        <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+                        <mat-cell *matCellDef="let element" data-label="location">
+                           {{element.company_location | titlecase}}
+                        </mat-cell>
+                    </ng-container>
+                    <!-- <ng-container matColumnDef="image">
+                        <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+                        <mat-cell *matCellDef="let element" data-label="image" class="p-1" style="cursor: pointer;">
+                            <ngx-lazy-images [placeholder]="placeholderOne" class="vehicleimg"
+                                        [src]="path+image" [height]="50" width="100" [alt]="'300X300'"
+                                        (click)="openDialog(element)">
+                                    </ngx-lazy-images>
+                                    
+                        </mat-cell>
+                    </ng-container> -->
+                    <ng-container matColumnDef="image">
+                        <mat-header-cell *matHeaderCellDef>Video </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <mat-icon style="cursor: pointer;;" class="menu-icon" (click)="openVideoDialog(element)">slideshow</mat-icon>
+                        </mat-cell>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef>
+                            <span style="margin-left: 17px;">Action</span>
+                            <span style="text-align: right;
+                                    width: 100%;">
+                                <mat-icon style="cursor: pointer;" matTooltip="Download" matTooltipPosition="left"
+                                            (click)="docdownload()">
+                                            cloud_download</mat-icon>
+                            </span>
+                        </mat-header-cell>
+                    </ng-container> -->
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; let even = even; columns: displayedColumns;"></mat-row>
+                </mat-table>
+                <!-- <div class="no-results">
+                    {{emptyData}}
+                </div> -->
+            </div>
+            <mat-paginator *ngIf="showPagination" [length]="totalSize" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+            (page)="changePage($event)">
+            </mat-paginator>
+        </div>
+        <!-- </mat-card> -->
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<button *ngIf="dataloading" mat-icon-button [matMenuTriggerFor]="messagesMenu" (click)="openMessagesMenu()">
+    <mat-icon>notifications</mat-icon>
+</button>
+<mat-menu #messagesMenu="matMenu" [overlapTrigger]="false" class="toolbar-dropdown-menu messages" >
+    <div (click)="stopClickPropagate($event)">
+        <mat-card class="content" perfectScrollbar>
+            <div fxLayout="column" fxLayoutAlign="none">
+                <button mat-button *ngFor="let message of notificationList">
+                    <div fxLayout="column" fxLayoutAlign="none" class="w-100">
+                        <div fxLayout="row" fxLayoutAlign="space-between start">
+                            <span class="name">{{message.vehicle_number | uppercase}}</span>
+                            <span class="info" *ngIf="getDateboolean(message.created_at)">
+                                <mat-icon>access_time</mat-icon> {{message.created_at | date: 'dd MMM yyyy HH:mm a'}}
+                            </span>
+                        </div>
+                        <span class="text secondary-text-color">{{message.message}}</span>
+                    </div>
+                </button>
+            </div>
+        </mat-card>
+    </div>
+</mat-menu>

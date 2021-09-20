@@ -1,0 +1,20 @@
+.user-form{
+    .form-field-outer{
+        width: 280px;
+    }
+    .mat-radio-button{
+        margin-right: 12px;
+    }
+}
+
+.close_btn {
+    float: right;
+    margin-top: -10px;
+    background: inherit;
+    cursor: pointer;
+}
+
+::ng-deep .cdk-overlay-pane{
+    max-width: 100vw;
+}
+

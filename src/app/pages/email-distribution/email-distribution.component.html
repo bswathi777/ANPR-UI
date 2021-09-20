@@ -1,0 +1,45 @@
+<app-content-header [icon]="'format_line_spacing'" [title]="'Reports'" [hideBreadcrumb]="false" [hasBgImage]="true">
+</app-content-header>
+
+<div fxLayout="columns" class="p-1" fxlayout.gt-sm="row wrap">
+    <div class="example-container p-2" id="example-container">
+        <mat-table #table [dataSource]="vehicleList">
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="company_name">
+                <mat-header-cell *matHeaderCellDef> Company Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.company_name}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="group">
+                <mat-header-cell *matHeaderCellDef>Group</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.group}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="added_by">
+                <mat-header-cell *matHeaderCellDef> Added By</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.added_by }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                <mat-cell *matCellDef="let element" style="cursor: pointer;">
+                    <mat-icon class="material-icons color_red" (click)="deleteEmailDistribution(element)">delete_outline</mat-icon>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; let even = even; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+
+        <div class="no-results" *ngIf="vehicleList?.length == 0">
+            {{emptyData}}
+        </div>
+
+
+        <mat-paginator *ngIf="dataloading" [length]="totalRecords" [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions" (page)="getVehicleList($event)">
+        </mat-paginator>
+    </div>
+</div>

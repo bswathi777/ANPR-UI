@@ -1,0 +1,18 @@
+<button mat-icon-button [matMenuTriggerFor]="appsMenu" #appsMenuTrigger="matMenuTrigger">
+    <mat-icon>apps</mat-icon>
+</button>
+<mat-menu #appsMenu="matMenu" [overlapTrigger]="false" class="toolbar-dropdown-menu applications">
+    <span (mouseleave)="appsMenuTrigger.closeMenu()">
+        <mat-card>           
+            <mat-grid-list cols="3" rowHeight="1:1">
+                <mat-grid-tile *ngFor="let list of menuList" (click)="getMenuID(list.app_name)" class="list-view">
+                  <button mat-button class="list-icons">
+                      <!-- <mat-icon class="gradient-indigo">device_hub</mat-icon> -->
+                      <img src={{list.app_icon}} width="40px" height="40px"/>
+                      <span>{{list.app_name}}</span>
+                  </button>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </mat-card>
+    </span>
+</mat-menu>

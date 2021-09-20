@@ -1,0 +1,25 @@
+<button mat-icon-button [matMenuTriggerFor]="userMenu" #userMenuTrigger="matMenuTrigger" >
+    <mat-icon>account_circle</mat-icon>
+</button>
+
+<mat-menu #userMenu="matMenu" [overlapTrigger]="false" class="toolbar-dropdown-menu user-menu">     
+        <mat-card fxLayout="row" fxLayoutAlign="space-around center" class="user-info p-0">
+            <img [src]="userImage" alt="user-image">
+            <div fxLayout="column" fxLayoutAlign="center center">
+                <h2>{{username | titlecase}}</h2>
+                <h3 class="secondary-text-color">{{roles}}</h3>
+                <!-- <p class="secondary-text-color">Member since May. 2016</p> -->
+            </div>
+        </mat-card>  
+        <mat-divider></mat-divider>
+        <a *ngIf="show_usrmngt" (click)="openUserMngt()" mat-menu-item> 
+            <mat-icon>settings</mat-icon>
+            <span>User Management</span> 
+        </a>
+        <mat-divider></mat-divider>
+        <a mat-menu-item (click)="userLogout()"> 
+            <mat-icon>power_settings_new</mat-icon>
+            <span>Log out</span> 
+        </a>
+    <!--</span>-->
+</mat-menu>

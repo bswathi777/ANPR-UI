@@ -1,0 +1,21 @@
+<mat-chip-list #chipList>
+    <mat-chip *ngFor="let item of selectedItems" [selectable]="selectable">
+        {{ item.usename }}<span>
+            <mat-icon class="close_btn" matTooltip="remove" (click)="removeSelection(item)">close</mat-icon>
+        </span>
+    </mat-chip>
+</mat-chip-list>
+<mat-form-field style="display: inline;">
+    <input type="text" #inputTrigger placeholder="Select Email" matInput [matAutocomplete]="autoComplete"
+        [formControl]="itemControl" (input)="emailSearch($event.target.value)" [matChipInputFor]="chipList">
+    <mat-autocomplete #autoComplete="matAutocomplete">
+        <mat-option style="width:500px; font-size: 12px;" *ngFor="let item of emailInfo" [value]="selectedItems">
+            <div (click)="optionClicked($event, item);">
+                <mat-checkbox [checked]="item.selected" (change)="toggleSelection(item)"
+                    (click)="$event.stopPropagation()">
+                    {{ item.work_email }}
+                </mat-checkbox>
+            </div>
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

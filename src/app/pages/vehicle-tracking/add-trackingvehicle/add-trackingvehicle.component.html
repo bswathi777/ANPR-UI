@@ -1,0 +1,105 @@
+<h1 mat-dialog-title>Add Tracking Vehicle</h1>
+<div mat-dialog-content>
+    <form #f="ngForm" (submit)="addTrackingForm(f)" class="user-form">
+        <div fxLayout="column" class="form-field-outer">
+
+            <mat-form-field class="w-100">
+                <input type="text" name="vehicle_number" placeholder="Vehicle Number" matInput [formControl]="myControl"
+                    [(ngModel)]="data.vehicle_number" (ngModelChange)="dataChanged($event)" [matAutocomplete]="auto"
+                    autocomplete="off" required="true">
+
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let option of vehicleNos | async" [value]="option.vehicle_reg_no">
+                        {{option.vehicle_reg_no | uppercase}}</mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="f.submitted">
+                    Vehicle Number is required
+                </mat-error>
+                
+
+            </mat-form-field>
+
+            <mat-form-field class="w-100">
+                <input matInput name="name" [(ngModel)]="data.name" #name="ngModel" placeholder="Name"
+                    autocomplete="off" required="true">
+                <mat-error *ngIf="(name.errors && name.touched || f.submitted)">
+                    <small *ngIf="name.errors?.required" class="haserror">
+                        Name is required
+                    </small>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-100">
+                <mat-select placeholder="Group" name="group" [(ngModel)]="data.group" #group="ngModel" required="true">
+                    <mat-option *ngFor="let list of groups" [value]="list.group">{{list.group}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="(group.errors && group.touched || f.submitted)">
+                    <small *ngIf="group.errors?.required" class="haserror">
+                        This field is required
+                    </small>
+                </mat-error>
+            </mat-form-field>
+
+            <div class="w-100" style="margin-bottom: 5px;">
+                <label>
+                    <span style="font-size: 14px;color: #616161;">Alert Event:</span>
+                    <mat-checkbox name="entry" style="font-size: 13px;color: #616161;margin: 10px;
+                    padding-left: 40px;" [(ngModel)]="data.entry" #entry="ngModel">
+                        Entry
+                    </mat-checkbox>
+                    <mat-checkbox name="exit" style="font-size: 13px;color: #616161;" [(ngModel)]="data.exit"
+                        #exit="ngModel">
+                        Exit
+                    </mat-checkbox>
+                </label>
+                <mat-error *ngIf="f.submitted">
+                    This field is required
+                </mat-error>
+            </div>
+
+            <div class="w-100" style="margin-bottom: 5px;">
+                <label>
+                    <span style="font-size: 14px;color: #616161;">Notification Type:</span>
+                    <mat-checkbox name="notification_type" style="font-size: 13px;color: #616161;padding-left: 12px;"
+                        [(ngModel)]="data.notification_type" #notification_type="ngModel">
+                        Email
+                    </mat-checkbox>
+                </label>
+                <mat-error *ngIf="f.submitted">
+                    This field is required
+                </mat-error>
+            </div>
+
+            <mat-form-field class="w-100">
+                <input matInput name="email" [(ngModel)]="data.email" #email="ngModel" placeholder="Enter Email ID"
+                pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" email="true" required="true" autocomplete="off">
+                <mat-error *ngIf="(email.errors && email.touched || f.submitted)">
+                    <small *ngIf="email.errors?.required" class="haserror">
+                        This field is required
+                    </small>
+                </mat-error>
+                <mat-error *ngIf="email.errors?.pattern">
+                    Invalid
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-100">
+                <textarea class="textarea-border" matInput placeholder="Comments" [(ngModel)]="data.comments"
+                    name="comments" #comments="ngModel" matTextareaAutosize matAutosizeMinRows=2
+                    matAutosizeMaxRows=3></textarea>
+                <mat-error *ngIf="(comments.errors && comments.touched || f.submitted)">
+                    <small *ngIf="comments.errors?.required" class="haserror">
+                        This field is required
+                    </small>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-raised-button color="primary" [disabled]="!f.valid" (click)="setSave(data)">Submit</button>
+
+    <!-- <button mat-raised-button color="primary" [disabled]="!f.valid">Submit</button> -->
+
+    <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+</div>

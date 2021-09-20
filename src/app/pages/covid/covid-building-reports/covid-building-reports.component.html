@@ -1,0 +1,37 @@
+<div fxLayout="row wrap" #resizedDiv>
+    <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" class="p-2">
+        <mat-card>
+            <mat-tab-group (selectedTabChange)="overallGreenko($event)">
+                <mat-tab label="GREENKO">
+                    <div class="w-100 h-300p" style="text-align: -webkit-center;" #resizedDiv>
+                        <app-covid-fusion-chart [chatTheme]="'fusion'" [covidData]="covidData" [type]="'mscolumn3d'"
+                            [renderChart]="'greenkoo'"></app-covid-fusion-chart>
+                    </div>
+                </mat-tab>
+                <mat-tab label="BUILDINGS">
+                    <div class="w-100 h-300p second-tab" style="text-align: -webkit-center;" #resizedDiv>
+                        <mat-form-field class="buildingSelect">
+                            <mat-label>Building Name</mat-label>
+                            <mat-select [(ngModel)]="selectedBuilding" (selectionChange)="onBuildingChange($event)">
+                                <mat-option *ngFor="let bdata of buildingsData" [value]="bdata.id">
+                                    {{bdata.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <app-covid-fusion-chart [chatTheme]="'fusion'" [covidBuildingData]="covidBuildingData"
+                            [type]="'mscolumn3d'" [renderChart]="'buildings'"></app-covid-fusion-chart>
+                    </div>
+                </mat-tab>
+                <mat-tab label="TRACK">
+                    <div class="w-100 h-300p" style="text-align: -webkit-center;" #resizedDiv>
+                        <button style="margin-left: 97%;cursor: pointer;" id="Settings" (click)="openMapDialog()" class="toggle-button controls button">
+                            <mat-icon class="menu-icon">open_in_full</mat-icon>
+                        </button>
+                        <!-- <app-covid-fusion-chart [chatTheme]="'fusion'" [covidData]="covidData" [type]="'mscolumn3d'" [renderChart]="'greenkoo'"></app-covid-fusion-chart> -->
+                        <app-covid-map [zoomSize]="10"></app-covid-map>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card>
+    </div>
+</div>

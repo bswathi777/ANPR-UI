@@ -1,0 +1,16 @@
+<div class="p-2">
+    <div fxLayout="row wrap">
+        <div *ngFor="let bData of bannerData;let i = index" fxFlex="50" fxFlex.xl="33.3" fxFlex.lg="33.3" fxFlex.md="33.3" fxFlex.sm="33.3"
+            class="p-2">
+            <mat-card (click)="showReportData(i)" [ngClass]=bData.class>
+                <mat-icon>{{bData.icon}}</mat-icon>
+                <h2>{{bData.value}}</h2>
+                <p>{{bData.prop}}</p>
+            </mat-card>
+        </div>
+    </div>
+    <app-covid-building-reports (onMatTabClick)="MatTabClick($event)" [covidData]="covidOverallData$" [covidBuildingData]="covidBuildingData"></app-covid-building-reports>
+    <app-covid-information-cards [showInformationCards]="showInformationCards" [covidDailyUpdate]="covidDailyUpdate" [covidMonthlyUpdate]="covidMonthlyUpdate"></app-covid-information-cards>
+    <app-covid-mind-map *ngIf="showInformationCards"  [showInformationCards]="showInformationCards" [userMeet]="userMeets"></app-covid-mind-map>
+    <app-covid-current-reports [showPagination]="false" [covidList]="covidList"></app-covid-current-reports>
+</div>

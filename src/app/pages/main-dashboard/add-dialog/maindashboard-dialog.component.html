@@ -1,0 +1,55 @@
+<h1 mat-dialog-title><span *ngIf="!data.id">Add</span><span *ngIf="data.id">Edit</span> Company</h1>
+<form #f="ngForm" (submit)="addCompanyForm(f)" class="user-form">
+    <mat-dialog-content>
+        <div fxLayout="column" class="form-field-outer">
+
+            <mat-form-field class="w-100">
+                <input matInput name="company_name" [(ngModel)]="companyname" #company_name="ngModel"
+                    placeholder="Company Name" readonly>
+            </mat-form-field>
+            <mat-form-field class="w-100">
+                <input matInput name="company_location" [(ngModel)]="data.company_location" #company_location="ngModel"
+                    placeholder="Enter Company Location" required="true">
+                <mat-error *ngIf="(company_location.errors && company_location.touched || f.submitted)">
+                    <small *ngIf="company_location.errors?.required" class="haserror">
+                        This field is required
+                    </small>
+                </mat-error>
+            </mat-form-field>
+            <mat-label><span style="color: #e6e616; font-size: 17px;">&#x26a0;</span>&nbsp;<span
+                    style="color: #27271e; font-weight: 400;font-size: 15px;">Once submitted, cannot be edited</span>
+            </mat-label>
+        </div>
+        <div>
+            <div class="map-postion">
+                <mat-form-field class="w-50 p-2">
+                    <input matInput name="latitude" [(ngModel)]="lat" placeholder="Latitude" required="true">
+                </mat-form-field>
+
+                <mat-form-field class="w-50 p-2">
+                    <input matInput name="longitude" [(ngModel)]="long" placeholder="Longitude" required="true">
+                </mat-form-field>
+            </div>
+
+            <button style="margin-left: 34%;" mat-raised-button color="primary" (click)="getCurrentLocation()">Track
+                Location</button>
+
+            <agm-map [latitude]="lat" [longitude]="long" [zoom]="mapZoom">
+                <agm-marker [latitude]="lat" [longitude]="long" [animation]="'DROP'" (dragEnd)="markerChange($event)"
+                    [markerDraggable]="true" [label]="'M'">
+                </agm-marker>
+            </agm-map>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+        <!-- <button mat-raised-button color="primary" [disabled]="!f.valid"><span (click)="setSave(data)"
+            *ngIf="!data.id">Save</span><span (click)="setUpdate(data)" *ngIf="data.id">Update</span></button> -->
+
+        <button mat-raised-button color="primary" [disabled]="!f.valid" (click)="setSave(data)"
+            *ngIf="!data.id">Save</button>
+        <button mat-raised-button color="primary" [disabled]="!f.valid" (click)="setUpdate(data)"
+            *ngIf="data.id">Update</button>
+
+        <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+    </mat-dialog-actions>
+</form>

@@ -1,0 +1,18 @@
+<h1 mat-dialog-title><span>Upload Logo</span></h1>
+<div mat-dialog-content>
+    <div fxLayout="column" class="form-field-outer">
+
+        <mat-form-field class="w-100">
+            <input matInput name="company_name" [(ngModel)]="data.company_name" #company_name="ngModel"
+                placeholder="Enter Company Name" readonly>
+        </mat-form-field>
+
+        <label>Choose File: </label>
+        <input type="file" style="margin-bottom: 20px;" name="file" id="file" (change)="handleFileInput($event.target.files)">
+
+    </div>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-raised-button color="primary" (click)="setSave()">Submit</button>
+    <button mat-raised-button color="warn" (click)="close()">Cancel</button>
+</div>
