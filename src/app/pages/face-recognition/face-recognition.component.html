@@ -1,0 +1,37 @@
+<!-- <section class="content">
+  <mat-card class="login-form-wrap">  
+    <mat-card-content>
+      <h1 style="font-size: 40px;text-align: center;">FACE RECOGNITION</h1>
+      <button class="btn mt-5"mat-raised-button (click)="view()">Click Here</button>
+    </mat-card-content>
+  </mat-card>
+</section> -->
+
+<div id="main" perfectScrollbar (psScrollY)="onPsScrollY($event)" class="h-100">
+
+  <header class="header" [class.over]="showInfoContent">
+
+    <mat-toolbar class="top-toolbar" [class.mat-elevation-z2]="settings.fixedHeader">
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <a routerLink="/main-dashboard" fxLayout="row" fxLayoutAlign="start center" class="logo" ngClass.xs="mobile"  (click)="closeSubMenus()">
+            <img src="assets/img/mainlogo.svg" alt="logo">
+            <span class="mx-2" style="color: #424242;"> | FACE RECOGNITION</span>
+          </a>
+        </div>
+      </div>
+    </mat-toolbar>
+  </header>
+
+    <button class="btn" mat-raised-button (click)="view()">Capture Video</button>
+      
+
+      
+
+        
+ 
+  <!-- <button class="btn mt-5" mat-raised-button (click)="view()">Capture Video</button> -->
+
+
+
+</div>

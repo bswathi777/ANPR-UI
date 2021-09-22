@@ -71,6 +71,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { CameraAccessDialogComponent } from './pages/main-dashboard/camera-access-dialog/camera-access-dialog.component';
 import { EditCommentComponent } from './edit-comment/edit-comment.component';
 import { LiveTrackingComponent } from './theme/components/live-tracking/live-tracking.component';
+import { FaceRecognitionComponent } from './pages/face-recognition/face-recognition.component';
 
 @NgModule({
   imports: [
@@ -136,6 +137,7 @@ import { LiveTrackingComponent } from './theme/components/live-tracking/live-tra
     CameraAccessDialogComponent,
     EditCommentComponent,
     LiveTrackingComponent,
+    FaceRecognitionComponent,
   ],
   providers: [
     GlobalServices,CommonServices,HttpServices, AuthguardService,

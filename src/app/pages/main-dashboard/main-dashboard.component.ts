@@ -274,4 +274,7 @@ console.log(list,'list');
 
     }
   }
+  testmethod(){
+    this.router.navigateByUrl('face-recognition')
+  }
 }
