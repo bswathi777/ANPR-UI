@@ -72,6 +72,7 @@ import { CameraAccessDialogComponent } from './pages/main-dashboard/camera-acces
 import { EditCommentComponent } from './edit-comment/edit-comment.component';
 import { LiveTrackingComponent } from './theme/components/live-tracking/live-tracking.component';
 import { FaceRecognitionComponent } from './pages/face-recognition/face-recognition.component';
+import { DigiLabComponent } from './pages/digi-lab/digi-lab.component';
 
 @NgModule({
   imports: [
@@ -138,6 +139,7 @@ import { FaceRecognitionComponent } from './pages/face-recognition/face-recognit
     EditCommentComponent,
     LiveTrackingComponent,
     FaceRecognitionComponent,
+    DigiLabComponent,
   ],
   providers: [
     GlobalServices,CommonServices,HttpServices, AuthguardService,

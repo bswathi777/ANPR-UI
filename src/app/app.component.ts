@@ -28,7 +28,7 @@ export class AppComponent {
       if (this.router.url === '/main-dashboard') {
         return "assets/img/mainlogo.svg";
       } else {
-        if (company_dataitem.company_logo == "") {
+        if ( !company_dataitem || company_dataitem.company_logo == "") {
           return "assets/img/mainlogo.svg";
         } else {
           return (this.path + company_dataitem.company_logo);
@@ -38,5 +38,9 @@ export class AppComponent {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    let company_dataitem = JSON.parse(localStorage.getItem('company_dataitem'));
+    console.log(company_dataitem,"company_dataitem");
+    
+  }
 }

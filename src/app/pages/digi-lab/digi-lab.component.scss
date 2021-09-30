@@ -1,0 +1,54 @@
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: whitesmoke;
+  color: #000;
+  text-align: center;
+}
+
+.form-control {
+  display: block;
+  width: 80%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+  .list-item {
+    border: 1px solid;
+    width: 200px;
+    padding: 4px;
+    text-align: center;
+    background-color: whitesmoke;
+  }
+  .price_input{
+    border: 1px solid #bebaba;
+    line-height: 30px;
+    width: 50%;
+    text-align: center;
+    padding: 9px;
+    margin-left: 10px;
+
+  }
+

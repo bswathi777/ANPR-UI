@@ -253,5 +253,20 @@ export class CommonServices {
         return this.http.HttpRequest({ url, method: 'G'});
     }
 
+  
+
+    getPrice(obj) : Observable<any> {
+        let url = this.globalServices.ApiUrls().getPrice;
+        return this.http.HttpRequest({ url, method: 'G', params: obj, ...obj });
+    }
+
+    CreateTest(obj) : Observable<any> {
+        let url = this.globalServices.ApiUrls().CreateTest;
+        return this.http.HttpRequest({ url, method: 'P', data: obj, ...obj });
+    }
+    getTests(obj) : Observable<any> {
+        let url = this.globalServices.ApiUrls().getTests;
+        return this.http.HttpRequest({ url, method: 'G', params: obj, ...obj });
+    }
     
 }

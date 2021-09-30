@@ -13,7 +13,7 @@ export class GlobalServices implements OnInit {
     public domain = window.location.origin;
 
     pageSize = 25;
-    pageSizeOptions = [25, 50, 100];
+    pageSizeOptions = [5,10,25, 50, 100];
 
     sso_url: any = environment.SSO_URL;
     path: any = environment.API_URL;
@@ -57,7 +57,7 @@ export class GlobalServices implements OnInit {
             'graphsVehicleData': environment.API_URL + 'graph/vehicledata',
             'getRecurringCount': environment.API_URL + 'recurring/vehicledata',
             'getCountReports': environment.API_URL + 'vehicles/count/data',
-
+           
             //covid19
 
             'getCovidDailyReport':environment.API_URL+'covid19_last7days_count',
@@ -69,6 +69,7 @@ export class GlobalServices implements OnInit {
             'getCovidLatLng':environment.API_URL+'covid19_user_lat_long_data',
             'getCovidBuildingReport':environment.API_URL+'covid19_cameras_by_bulding',
             'getEmailForReport':this.sso_url+'userlist',
+           
 
             //Report
             'getReportList': environment.API_URL + 'retrival/data',
@@ -92,6 +93,12 @@ export class GlobalServices implements OnInit {
             //List
             'notificationList': environment.API_URL + 'notification',
             'activityLog': environment.API_URL + 'activity_log',
+
+            //digi-lab
+            'getPrice':environment.API_URL+'get_prices',
+            'CreateTest':environment.API_URL+'insert_price',
+            'getTests':environment.API_URL+'get_test_prices',
+
 
         }
     }
