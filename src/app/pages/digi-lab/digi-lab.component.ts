@@ -79,19 +79,19 @@ test_names = [
 
   addItem() {
     this.arr = this.myForm.get('arr') as FormArray;
-    
-    this.arr.reset()
-    const temp =  []
-      temp.forEach(item =>{
-        this.arr.push( this.fb.group({
-          test_name: item.test_name,
-          no_of_records: item.no,
-          PRICE_PER_RECORD: 0,
-          TEST_PRICE:0
+    this.arr.push(this.createItem());
+    // this.arr.reset()
+    // const temp =  []
+    //   temp.forEach(item =>{
+    //     this.arr.push( this.fb.group({
+    //       test_name: item.test_name,
+    //       no_of_records: item.no,
+    //       PRICE_PER_RECORD: 0,
+    //       TEST_PRICE:0
 
-        }));
+    //     }));
 
-      })
+    //   })
   }
 
 
