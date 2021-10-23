@@ -57,8 +57,9 @@ color: white;">
                     <div *ngFor="let list of companyList | CompanySearchPipe : searchText" fxFlex="100"
                         fxFlex.gt-md="33.3" fxFlex.md="50" fxFlex.sm="50" class="p-2">
                         <mat-card fxLayout="row" class="p-0 user-content">
-                            <div fxFlex="35" fxLayout="column" fxLayoutAlign="center center" class="bg-primary dashboard_company"
-                                [routerLink]="['/dashboard']" (click)="showDashboard(list)" [ngStyle]="styleObject(list)" >
+                            <div fxFlex="35" fxLayout="column" fxLayoutAlign="center center"
+                                class="bg-primary dashboard_company" [routerLink]="['/dashboard']"
+                                (click)="showDashboard(list)" [ngStyle]="styleObject(list)">
                                 <div class="user-img">
                                     <!-- <img [src]="(path+list.company_logo)" class="transition mb-2"> -->
                                     <img [src]="getLogo(list.company_logo)" class="transition mb-2">
@@ -66,7 +67,8 @@ color: white;">
                             </div>
                             <div fxFlex="65" class="user-details">
                                 <div fxLayout="row" fxLayoutAlign="space-between center">
-                                    <h4 class="user-name px-2" (click)="showDashboard(list)" [routerLink]="['/dashboard']">{{list.company_name}}</h4>
+                                    <h4 class="user-name px-2" (click)="showDashboard(list)"
+                                        [routerLink]="['/dashboard']">{{list.company_name}}</h4>
 
                                     <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
                                         <mat-icon>more_vert</mat-icon>
@@ -108,7 +110,7 @@ color: white;">
                         </mat-card>
                     </div>
                 </div>
-                <button (click)="testmethod()">face-recognition</button>
+
                 <!-- <div *ngIf="companyList" fxLayout="row wrap">
                     <div fxFlex="100" class="p-2">
                         <mat-card class="p-0 text-center">
@@ -126,5 +128,5 @@ color: white;">
     <!-- <mat-toolbar color="primary" class="footer" [class.full-width]="!showSidenav">
         <span style="font-size: 15px">Designed & Developed by DigiTele Networks Private Limited.</span>
     </mat-toolbar> -->
-  
+
 </div>

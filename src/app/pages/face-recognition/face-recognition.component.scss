@@ -1,23 +1,51 @@
 @import "../../theme/styles/variables";
-.top-toolbar{
-    position: relative;
-    height: $top-toolbar-height;
-    z-index: 1;
-    padding: 0 16px;
-    height: 64px;
+.top-toolbar {
+  position: relative;
+  height: $top-toolbar-height;
+  z-index: 1;
+  padding: 0 16px;
+  height: 64px;
 }
 
-.users-wrapper{
-    position:relative; 
-    min-height: 150px;
-    padding: 0.5px;
+.users-wrapper {
+  position: relative;
+  min-height: 150px;
+  padding: 0.5px;
 }
-.user-toolbar{
-    background: transparent !important;
-    height: 40px;
-     margin-top: -40px;
+.user-toolbar {
+  background: transparent !important;
+  height: 40px;
+  margin-top: -40px;
 }
-.btn{
-    margin-top: 74px;
-    margin-left: 20px;
+// .btn {
+//   margin-top: 74px;
+//   margin-left: 20px;
+// }
+.search-bar {
+  form {
+    input {
+      height: 28px;
+      border: none;
+      padding: 0;
+      border-radius: 15px;
+      outline: none;
+      color: #444;
+      width: 0;
+      overflow: hidden;
+      transition: 0.3s;
+      &.show {
+        padding: 0 8px;
+        width: 250px;
+      }
+    }
+  }
+}
+.loader {
+  position: absolute;
+  top: 40%;
+  left: 60%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  font-size: medium !important;
 }

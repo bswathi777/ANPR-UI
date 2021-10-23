@@ -1,37 +1,66 @@
-<!-- <section class="content">
-  <mat-card class="login-form-wrap">  
-    <mat-card-content>
-      <h1 style="font-size: 40px;text-align: center;">FACE RECOGNITION</h1>
-      <button class="btn mt-5"mat-raised-button (click)="view()">Click Here</button>
-    </mat-card-content>
-  </mat-card>
-</section> -->
-
-<div id="main" perfectScrollbar (psScrollY)="onPsScrollY($event)" class="h-100">
+<div id="main" #perfectScrollbar (psScrollY)="onPsScrollY($event)" class="h-100 d-none">
 
   <header class="header" [class.over]="showInfoContent">
-
     <mat-toolbar class="top-toolbar" [class.mat-elevation-z2]="settings.fixedHeader">
       <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
         <div fxLayout="row" fxLayoutAlign="center center">
-          <a routerLink="/main-dashboard" fxLayout="row" fxLayoutAlign="start center" class="logo" ngClass.xs="mobile"  (click)="closeSubMenus()">
+          <a routerLink="/main-dashboard" fxLayout="row" fxLayoutAlign="start center" class="logo" ngClass.xs="mobile"
+            (click)="closeSubMenus()">
             <img src="assets/img/mainlogo.svg" alt="logo">
             <span class="mx-2" style="color: #424242;"> | FACE RECOGNITION</span>
           </a>
         </div>
+        <div fxLayout="row" fxLayoutAlign="end center">
+          <div fxLayout="row" fxLayoutAlign="start center" fxShow="false" fxShow.gt-xs class="search-bar">
+            <form method="get">
+              <input type="text" placeholder="Type to search..." class="mat-elevation-z3"
+                [class.show]="toggleSearchBar">
+              <button mat-icon-button (click)="toggleSearchBar = !toggleSearchBar" type="button">
+                <mat-icon>search</mat-icon>
+              </button>
+            </form>
+          </div>
+          <app-fullscreen></app-fullscreen>
+          <app-applications fxShow="false" fxShow.gt-sm></app-applications>
+          <app-user-menu></app-user-menu>
+        </div>
       </div>
     </mat-toolbar>
   </header>
+  <mat-drawer-container class="page-wrapper">
+    <div class="mat-drawer-container">
+      <div class="users-wrapper p-2">
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+          <div fxLayout.gt-md="row" fxLayout.lt-sm="column" fxLayoutGap="10px" fxFlex="100" fxFlex.gt-md="50">
+            <div fxFlex.lt-md="50" fxFlex.lt-sm="100">
+              <div style="margin-top: 22px;">
+                <webcam [height]="300" [width]="400" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
+                  *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch" [videoOptions]="videoOptions"
+                  [imageQuality]="1" (initError)="handleInitError($event)"></webcam>
+                <br />
+                <button class="actionBtn" mat-raised-button (click)="triggerSnapshot();saveImage();">Take A
+                  Snapshot </button>
+                <!-- <mat-spinner [diameter]="24" *ngIf="onSubmitLoading"
+                    style="float:right; margin: 5px 0px 0px 5px">
+                  </mat-spinner>-->
+                <mat-spinner class="loader" color="warning" *ngIf="onSubmitLoading"></mat-spinner>
 
-    <button class="btn" mat-raised-button (click)="view()">Capture Video</button>
-      
+              </div>
+            </div>
 
-      
-
-        
- 
-  <!-- <button class="btn mt-5" mat-raised-button (click)="view()">Capture Video</button> -->
-
-
-
+          </div>
+          <div fxLayout.gt-md="row" fxLayout.lt-sm="column" fxLayoutGap="10px" fxFlex="100" fxFlex.gt-md="50">
+            <div fxFlex.lt-md="50" fxFlex.lt-sm="100">
+              <div class="snapshot" *ngIf="snapshots.length > 0">
+                <div *ngFor="let snap of snapshots">
+                  <img [src]="snap" height="300px" width="400px" style="margin-top: 22px;" />
+                </div>
+              </div>
+              <h3>{{personIdentity}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-drawer-container>
 </div>

@@ -1,24 +1,35 @@
-import { GlobalServices } from './../../services/global.service';
-import { CommonServices } from './../../services/common.services';
-import { Component, OnInit, ViewChild, HostListener, ViewChildren, QueryList, ViewEncapsulation } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { PerfectScrollbarDirective, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { AppSettings } from '../../app.settings';
-import { Settings } from '../../app.settings.model';
-import { MatDialog, MatSnackBar, MatDialogRef } from '@angular/material';
-import { Company } from './company.model';
-import { ConfirmDeleteComponent } from '../confirm-delete/confirm-delete.component';
-import { AddCompanyDialogComponent } from './add-dialog/maindashboard-dialog.component';
-import { UploadLogoDialogComponent } from './uploadlogo/uploadlogo.component';
-import { CameraAccessDialogComponent } from './camera-access-dialog/camera-access-dialog.component';
+import { GlobalServices } from "./../../services/global.service";
+import { CommonServices } from "./../../services/common.services";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  HostListener,
+  ViewChildren,
+  QueryList,
+  ViewEncapsulation,
+} from "@angular/core";
+import { Router, NavigationEnd } from "@angular/router";
+import {
+  PerfectScrollbarDirective,
+  PerfectScrollbarConfigInterface,
+} from "ngx-perfect-scrollbar";
+import { AppSettings } from "../../app.settings";
+import { Settings } from "../../app.settings.model";
+import { MatDialog, MatSnackBar, MatDialogRef } from "@angular/material";
+import { Company } from "./company.model";
+import { ConfirmDeleteComponent } from "../confirm-delete/confirm-delete.component";
+import { AddCompanyDialogComponent } from "./add-dialog/maindashboard-dialog.component";
+import { UploadLogoDialogComponent } from "./uploadlogo/uploadlogo.component";
+import { CameraAccessDialogComponent } from "./camera-access-dialog/camera-access-dialog.component";
 
 const incr = 1;
 
 @Component({
-  selector: 'app-main-dashboard',
-  templateUrl: './main-dashboard.component.html',
-  styleUrls: ['./main-dashboard.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: "app-main-dashboard",
+  templateUrl: "./main-dashboard.component.html",
+  styleUrls: ["./main-dashboard.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class MainDashboardComponent implements OnInit {
   public companyList: Company[];
@@ -30,28 +41,32 @@ export class MainDashboardComponent implements OnInit {
 
   progress = 0;
 
-  @ViewChild('sidenav', { static: false }) sidenav: any;
-  @ViewChild('backToTop', { static: false }) backToTop: any;
-  @ViewChildren(PerfectScrollbarDirective) pss: QueryList<PerfectScrollbarDirective>;
+  @ViewChild("sidenav", { static: false }) sidenav: any;
+  @ViewChild("backToTop", { static: false }) backToTop: any;
+  @ViewChildren(PerfectScrollbarDirective)
+  pss: QueryList<PerfectScrollbarDirective>;
   public optionsPsConfig: PerfectScrollbarConfigInterface = {};
   public settings: Settings;
   public showSidenav: boolean = false;
   public showInfoContent: boolean = false;
   public toggleSearchBar: boolean = false;
-  private defaultMenu: string; //declared for return default menu when window resized 
-  public menus = ['vertical', 'horizontal'];
+  private defaultMenu: string; //declared for return default menu when window resized
+  public menus = ["vertical", "horizontal"];
   public menuOption: string;
-  public menuTypes = ['default', 'compact', 'mini'];
+  public menuTypes = ["default", "compact", "mini"];
   public menuTypeOption: string;
   total: any;
 
   dialogRef: MatDialogRef<ConfirmDeleteComponent>;
 
-  constructor(public appSettings: AppSettings, 
-    public router: Router, public dialog: MatDialog, 
-    private commonServices: CommonServices, 
-    private globalServices: GlobalServices, 
-    private snackBar: MatSnackBar) {
+  constructor(
+    public appSettings: AppSettings,
+    public router: Router,
+    public dialog: MatDialog,
+    private commonServices: CommonServices,
+    private globalServices: GlobalServices,
+    private snackBar: MatSnackBar
+  ) {
     this.settings = this.appSettings.settings;
   }
 
@@ -59,14 +74,14 @@ export class MainDashboardComponent implements OnInit {
     if (logo == "") {
       return "assets/img/mainlogo.svg";
     } else {
-      return (this.path + logo);
+      return this.path + logo;
     }
   }
 
   ngOnInit() {
     this.optionsPsConfig.wheelPropagation = false;
     if (window.innerWidth <= 960) {
-      this.settings.menu = 'vertical';
+      this.settings.menu = "vertical";
       this.settings.sidenavIsOpened = false;
       this.settings.sidenavIsPinned = false;
     }
@@ -78,54 +93,48 @@ export class MainDashboardComponent implements OnInit {
   }
 
   getLists() {
-    let obj = {}
-    this.commonServices.getCompanyList(obj).subscribe(res => {
-      if (res['success'] == '1') {
-        this.companyList = res['data'];
-        console.log(this.companyList,'data');
-        
-        this.total = res['count'];
-        
+    let obj = {};
+    this.commonServices.getCompanyList(obj).subscribe(
+      (res) => {
+        if (res["success"] == "1") {
+          this.companyList = res["data"];
+          console.log(this.companyList, "data");
 
-      } else if (res['success'] == '0') {
-        this.companyList = [];
-
-      }
-    },
-      err => {
+          this.total = res["count"];
+        } else if (res["success"] == "0") {
+          this.companyList = [];
+        }
+      },
+      (err) => {
         console.log(err);
-        this.router.navigate(['/error']);
-      });
+        this.router.navigate(["/error"]);
+      }
+    );
   }
 
   public onPageChanged(event) {
     this.page = event;
     this.getLists();
-    document.getElementById('main').scrollTop = 0;
+    document.getElementById("main").scrollTop = 0;
   }
-
 
   uploadImage(list) {
     let dialogRef = this.dialog.open(UploadLogoDialogComponent, {
-      data: list
+      data: list,
     });
-    dialogRef.afterClosed().subscribe(company => {
-
+    dialogRef.afterClosed().subscribe((company) => {
       this.getLists();
     });
     this.showSearch = false;
   }
 
-
-
   public openCompanyDialog(company) {
     let dialogRef = this.dialog.open(AddCompanyDialogComponent, {
       data: company,
-      width:"50%",
-      height:"90%"
+      width: "50%",
+      height: "90%",
     });
-    dialogRef.afterClosed().subscribe(company => {
-
+    dialogRef.afterClosed().subscribe((company) => {
       this.getLists();
     });
     this.showSearch = false;
@@ -133,54 +142,57 @@ export class MainDashboardComponent implements OnInit {
 
   public openCameraDialog(company) {
     let dialogRef = this.dialog.open(CameraAccessDialogComponent, {
-      width: '',
-      height: '',
-      data: company
+      width: "",
+      height: "",
+      data: company,
     });
   }
-
 
   deleteCompany(company) {
     //console.log(company);
     this.dialogRef = this.dialog.open(ConfirmDeleteComponent, {
-      disableClose: false
+      disableClose: false,
     });
-    this.dialogRef.componentInstance.title = company.company_name + ", " + company.company_location;
-    this.dialogRef.componentInstance.confirmMessage = "Are you sure you want to delete?"
+    this.dialogRef.componentInstance.title =
+      company.company_name + ", " + company.company_location;
+    this.dialogRef.componentInstance.confirmMessage =
+      "Are you sure you want to delete?";
     this.dialogRef.componentInstance.note = "";
 
-    this.dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         let obj = {
-          "id": company.id
-        }
-        this.commonServices.deleteCompany(obj).subscribe(res => {
-          if (res['success'] == '1') {
-            this.snackBar.open(res["message"], "close", {
-              duration: 2000,
-            });
+          id: company.id,
+        };
+        this.commonServices.deleteCompany(obj).subscribe(
+          (res) => {
+            if (res["success"] == "1") {
+              this.snackBar.open(res["message"], "close", {
+                duration: 2000,
+              });
 
-            this.getLists();
-
-          } else if (res['success'] == '0') {
-            this.snackBar.open(res["message"], "close", {
-              duration: 2000,
-            });
-          }
-        },
-          err => {
+              this.getLists();
+            } else if (res["success"] == "0") {
+              this.snackBar.open(res["message"], "close", {
+                duration: 2000,
+              });
+            }
+          },
+          (err) => {
             console.log(err);
-          });
-
+          }
+        );
       }
       this.dialogRef = null;
     });
   }
 
   ngAfterViewInit() {
-    setTimeout(() => { this.settings.loadingSpinner = false }, 300);
+    setTimeout(() => {
+      this.settings.loadingSpinner = false;
+    }, 300);
     //this.backToTop.nativeElement.style.display = 'none';
-    this.router.events.subscribe(event => {
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.scrollToTop();
       }
@@ -188,34 +200,32 @@ export class MainDashboardComponent implements OnInit {
         this.sidenav.close();
       }
     });
-
   }
 
-  styleObject(list){
+  styleObject(list) {
     if (list.camera_status == true) {
-      return {'cursor': 'pointer'}
-    }else{
-      return {}
+      return { cursor: "pointer" };
+    } else {
+      return {};
     }
-
   }
 
   showDashboard(list) {
-console.log(list,'list');
+    console.log(list, "list");
 
     if (list.camera_status == true) {
-
-      localStorage.setItem('company_dataitem', JSON.stringify(list));
+      localStorage.setItem("company_dataitem", JSON.stringify(list));
       // let domain = this.globalServices.domain + '/dashboard';
       // window.location.href = domain;
-    }else{
-
+    } else {
     }
   }
 
   openCamera(list) {
     //console.log(list)
-    this.router.navigate(['/cameraid-dashboard'], { queryParams: { id: list.id } });
+    this.router.navigate(["/cameraid-dashboard"], {
+      queryParams: { id: list.id },
+    });
   }
 
   public toggleSidenav() {
@@ -225,10 +235,10 @@ console.log(list,'list');
   public chooseMenu() {
     this.settings.menu = this.menuOption;
     this.defaultMenu = this.menuOption;
-    if (this.menuOption == 'horizontal') {
+    if (this.menuOption == "horizontal") {
       this.settings.fixedSidenav = false;
     }
-    this.router.navigate(['/main-dashboard']);
+    this.router.navigate(["/main-dashboard"]);
   }
 
   public chooseMenuType() {
@@ -243,27 +253,30 @@ console.log(list,'list');
     this.showInfoContent = !showInfoContent;
   }
 
-  @HostListener('window:resize')
+  @HostListener("window:resize")
   public onWindowResize(): void {
     if (window.innerWidth <= 960) {
       this.settings.sidenavIsOpened = false;
       this.settings.sidenavIsPinned = false;
-      this.settings.menu = 'vertical'
-    }
-    else {
-      (this.defaultMenu == 'horizontal') ? this.settings.menu = 'horizontal' : this.settings.menu = 'vertical'
+      this.settings.menu = "vertical";
+    } else {
+      this.defaultMenu == "horizontal"
+        ? (this.settings.menu = "horizontal")
+        : (this.settings.menu = "vertical");
       this.settings.sidenavIsOpened = true;
       this.settings.sidenavIsPinned = true;
     }
   }
 
   public onPsScrollY(event) {
-    (event.target.scrollTop > 300) ? this.backToTop.nativeElement.style.display = 'flex' : this.backToTop.nativeElement.style.display = 'none';
+    event.target.scrollTop > 300
+      ? (this.backToTop.nativeElement.style.display = "flex")
+      : (this.backToTop.nativeElement.style.display = "none");
   }
 
   public scrollToTop() {
-    this.pss.forEach(ps => {
-      if (ps.elementRef.nativeElement.id == 'main') {
+    this.pss.forEach((ps) => {
+      if (ps.elementRef.nativeElement.id == "main") {
         ps.scrollToTop(0, 250);
       }
     });
@@ -271,10 +284,6 @@ console.log(list,'list');
 
   public closeSubMenus() {
     if (this.settings.menu == "vertical") {
-
     }
-  }
-  testmethod(){
-    this.router.navigateByUrl('face-recognition')
   }
 }

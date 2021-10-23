@@ -1,0 +1,59 @@
+<div id="main" perfectScrollbar (psScrollY)="onPsScrollY($event)" class="h-100 d-none">
+
+    <header class="header" [class.over]="showInfoContent">
+        <mat-toolbar class="top-toolbar" [class.mat-elevation-z2]="settings.fixedHeader">
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <a routerLink="/main-dashboard" fxLayout="row" fxLayoutAlign="start center" class="logo"
+                        ngClass.xs="mobile" (click)="closeSubMenus()">
+                        <img src="assets/img/mainlogo.svg" alt="logo">
+                        <span class="mx-2" style="color: #424242;"> | FACE RECOGNITION</span>
+                    </a>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="end center">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxShow="false" fxShow.gt-xs class="search-bar">
+                        <form method="get">
+                            <input type="text" placeholder="Type to search..." class="mat-elevation-z3"
+                                [class.show]="toggleSearchBar">
+                            <button mat-icon-button (click)="toggleSearchBar = !toggleSearchBar" type="button">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </form>
+                    </div>
+                    <app-fullscreen></app-fullscreen>
+                    <app-applications fxShow="false" fxShow.gt-sm></app-applications>
+                    <app-user-menu></app-user-menu>
+                </div>
+            </div>
+        </mat-toolbar>
+    </header>
+
+    <mat-drawer-container class="page-wrapper">
+        <div class="mat-drawer-container">
+            <div class="users-wrapper p-2">
+
+                <h3 style="margin-top: 22px;">
+                    <video #videoElement class="video">
+                        <source *ngIf="!isVideoRecording && videoBlobUrl" [src]="videoBlobUrl">
+                    </video>
+                </h3>
+
+                <!-- <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
+                    <div fxLayout.gt-md="row" fxLayout.lt-sm="column" fxLayoutGap="10px" fxFlex="100" fxFlex.gt-md="50"> -->
+                <button class="recordbutton" *ngIf="!isVideoRecording && !videoBlobUrl" mat-raised-button
+                    (click)="startVideoRecording()">Start Video
+                    Recording</button>
+                <button class="recordbutton" *ngIf="isVideoRecording && !videoBlobUrl" mat-raised-button
+                    (click)="stopVideoRecording()">Stop Video
+                    Recording</button>
+                <button class="recordbutton" *ngIf="!isVideoRecording && videoBlobUrl" mat-raised-button
+                    (click)="clearVideoRecordedData()">Clear
+                    Video Recording</button>
+                <!---  <button class="download-button" *ngIf="!isVideoRecording && videoBlobUrl"
+                            (click)="downloadVideoRecordedData()">Download Video Recording</button> -->
+                <div id="videoTimer" *ngIf="isVideoRecording && !videoBlobUrl"> {{ videoRecordedTime }} </div>
+                <!-- </div>
+                </div> -->
+            </div>
+
+        </div>
