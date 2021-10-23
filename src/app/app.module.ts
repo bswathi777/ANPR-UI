@@ -72,6 +72,8 @@ import { CameraAccessDialogComponent } from "./pages/main-dashboard/camera-acces
 import { EditCommentComponent } from "./edit-comment/edit-comment.component";
 import { LiveTrackingComponent } from "./theme/components/live-tracking/live-tracking.component";
 import { FaceRecognitionComponent } from "./pages/face-recognition/face-recognition.component";
+import { DigiLabComponent } from "./pages/digi-lab/digi-lab.component";
+
 import { WebcamModule } from "ngx-webcam";
 import { FaceRecognitionVideoComponent } from "./pages/face-recognition-video/face-recognition-video.component";
 @NgModule({
@@ -142,6 +144,8 @@ import { FaceRecognitionVideoComponent } from "./pages/face-recognition-video/fa
     EditCommentComponent,
     LiveTrackingComponent,
     FaceRecognitionVideoComponent,
+    FaceRecognitionComponent,
+    DigiLabComponent,
   ],
   providers: [
     GlobalServices,

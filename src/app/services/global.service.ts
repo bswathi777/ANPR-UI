@@ -12,7 +12,7 @@ export class GlobalServices implements OnInit {
   public domain = window.location.origin;
 
   pageSize = 25;
-  pageSizeOptions = [25, 50, 100];
+  pageSizeOptions = [5, 10, 25, 50, 100];
 
   sso_url: any = environment.SSO_URL;
   path: any = environment.API_URL;
@@ -91,7 +91,11 @@ export class GlobalServices implements OnInit {
       notificationList: environment.API_URL + "notification",
       activityLog: environment.API_URL + "activity_log",
 
-      //face recognition
+      //digi-lab
+      getPrice: environment.API_URL + "get_prices",
+      CreateTest: environment.API_URL + "insert_price",
+      getTests: environment.API_URL + "get_test_prices",
+      // faceRecognition
       faceRecognition: environment.API_URL + "face_identification",
     };
   }

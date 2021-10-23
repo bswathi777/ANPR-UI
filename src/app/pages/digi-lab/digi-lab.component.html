@@ -1,0 +1,277 @@
+<div style=" background-color: whitesmoke;">
+  <div>
+    <h2 style="text-align: center; margin-top: 10px;">DIGI LABS</h2>
+
+  </div>
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <mat-card style="margin-top: 40px;">
+
+
+      <div fxFlex="100" fxLayout="row">
+        <div fxFlex="5" class="column"></div>
+        <div fxFlex="25" class="column">
+
+          <div style="margin:0 auto; margin-top: 38px;">
+            <h3 style="margin-left:20%;">Tests Available</h3>
+
+            <ul style="list-style-type: none; ">
+              <li class="list-item" *ngFor="let item of test_names">
+                {{item}}
+              </li>
+
+
+            </ul>
+          </div>
+        </div>
+        <div fxFlex="70" class="column">
+          <div>
+            <h3 style="text-align: center;">Test Lists</h3>
+          </div>
+          <!-- <div>
+          <button mat-button type="button" color="primary" (click)="createtestModal(createtest)" style=" background-color:#bdbdbd;color:#000;float: right;
+            margin-bottom: 15px; margin-top: -15px;">Add Test</button>
+        </div> -->
+          <div>
+            <button mat-button type="button" color="primary" (click)="addItem()" style=" background-color:#bdbdbd;color:#000;float: right;
+            margin-bottom: 15px; margin-top: -15px;">Add Test</button>
+          </div>
+
+          <!-- <table mat-table [dataSource]="testsData" class="mat-elevation-z8">
+
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> S.No </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="TEST_NAME">
+            <th mat-header-cell *matHeaderCellDef> Test Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.TEST_NAME}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="TEST_RECORDS">
+            <th mat-header-cell *matHeaderCellDef> No Of Records </th>
+            <td mat-cell *matCellDef="let element"> {{element.TEST_RECORDS}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="PRICE_PER_RECORD">
+            <th mat-header-cell *matHeaderCellDef> Price Per Record </th>
+            <td mat-cell *matCellDef="let element"> {{element.PRICE_PER_RECORD}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="TEST_PRICE">
+            <th mat-header-cell *matHeaderCellDef> Price </th>
+            <td mat-cell *matCellDef="let element"> {{element.TEST_PRICE}} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;"></div>
+
+
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+          (page)="getTests($event)">
+        </mat-paginator> -->
+
+
+
+
+         <table id="customers">
+            <thead>
+              <tr>
+
+                <th>Test Name</th>
+                <th>No Of Records</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr formArrayName="arr" *ngFor="let a of myForm.get('arr').controls; let i = index"
+                style="text-align: center;">
+                <td [formGroupName]="i">
+
+                  <select class="form-control" formControlName="test_name">
+                    <option hidden value="" disabled selected>Select Test Type</option>
+                    <option *ngFor="let test of test_names" value="{{test}}">{{test}}</option>
+                  </select>
+                </td>
+                <td [formGroupName]="i">
+                  <input type="number" class="form-control" formControlName="no_of_records"
+                    placeholder="Enter No Of Records" />
+                </td>
+
+
+                <td [formGroupName]="i">
+                  <mat-icon (click)="removetest(i)" style="cursor: pointer;">delete</mat-icon>
+                </td>
+              </tr>
+            </tbody>
+          </table> 
+
+
+
+
+
+
+
+        </div>
+
+      </div>
+    </mat-card>
+    <div style="text-align: center;">
+      <button mat-button type="button" color="primary" style=" background-color:#bdbdbd;color:#000;
+    margin-bottom: 15px; margin-top: 15px;" type="submit">Submit</button>
+    </div>
+
+  </form>
+</div>
+
+<!-- 
+<ng-template #createtest>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex="90">
+      <h1 mat-dialog-title>
+        Add Test
+      </h1>
+    </div>
+ 
+
+
+    <div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+  <br>
+
+  <mat-dialog-content>
+
+    <form #f="ngForm" (submit)="CalculatePrice(f)">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="40">
+         
+          <mat-form-field>
+            <mat-label>Select Test Name</mat-label>
+            <mat-select>
+
+              <mat-option *ngFor="let item of test_names" [value]="item" (click)="selectedTest(item)">{{item}}
+              </mat-option>
+
+
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="40">
+          <mat-form-field class="full-width">
+            <input matInput (keypress)="numberOnly($event)" placeholder="Enter No Of Records" name="no_of_records"
+              [(ngModel)]="testModal.no_of_records" #no_of_records="ngModel">
+          </mat-form-field>
+        </div>
+        <div fxFlex="20">
+          <button mat-button type="submit" [disabled]="f.invalid"
+            style="background-color: rgb(209, 199, 199);">Add</button>
+        </div> -->
+
+<!-- <div fxFlex="26" *ngIf="this.price>0">
+          <span>=</span> <span class="price_input"><b>{{this.price}}</b></span>
+        </div> -->
+<!-- <div>
+
+        </div>
+
+      </div>
+
+    </form>
+
+
+    <br>
+    <mat-card *ngIf="testsArry.length >0">
+      <table>
+        <tr>
+          <th>S.No</th>
+          <th>Test Name</th>
+          <th>No Of Records</th>
+          <th>Actions</th>
+        </tr>
+        <tr *ngFor='let item of testsArry; let i=index' style="text-align: center;">
+          <td>{{i+1}}</td>
+          <td>{{item.test_name}}</td>
+          <td>{{item.no_of_records}}</td>
+          <td>
+            <mat-icon (click)="deleteTest(item)">delete</mat-icon>
+          </td>
+        </tr>
+      </table>
+    </mat-card>
+  </mat-dialog-content>
+  <form #c="ngForm" (submit)="OnSubmit(c)">
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-button type="submit" mat-button mat-dialog-close>Submit</button>
+    </mat-dialog-actions>
+  </form>
+
+</ng-template> -->
+
+
+
+
+
+
+<!-- <ng-template #createtest>
+ 
+  <div>
+    <button mat-button type="button" color="primary" (click)="addItem()" style=" background-color:#bdbdbd;color:#000;float: right;
+    margin-bottom: 15px; margin-top: -15px;">Add Test</button>
+  </div>
+  <br>
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <table id="customers">
+      <thead>
+        <tr>
+
+          <th>Test Name</th>
+          <th>No Of Records</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr formArrayName="arr" *ngFor="let a of myForm.get('arr').controls; let i = index"
+          style="text-align: center;">
+          <td [formGroupName]="i">
+
+            <select class="form-control" formControlName="test_name">
+              <option hidden value="" disabled selected>Select Test Type</option>
+              <option *ngFor="let test of test_names" value="{{test}}">{{test}}</option>
+            </select>
+          </td>
+          <td [formGroupName]="i">
+            <input type="number" class="form-control" formControlName="no_of_records"
+              placeholder="Enter No Of Records" />
+          </td>
+
+
+          <td [formGroupName]="i">
+            <mat-icon (click)="removetest(i)" style="cursor: pointer;">delete</mat-icon>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-dialog-content>
+
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button type="submit" mat-button mat-dialog-close>Submit</button>
+  </mat-dialog-actions>
+
+  </form>
+</ng-template> -->

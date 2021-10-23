@@ -258,8 +258,23 @@ export class CommonServices {
     let url = this.globalServices.ApiUrls().getCovidLatLng;
     return this.http.HttpRequest({ url, method: "G" });
   }
+
   faceRecognition(obj): Observable<any> {
     let url = this.globalServices.ApiUrls().faceRecognition;
     return this.http.HttpRequest({ url, method: "P", data: obj, ...obj });
+  }
+
+  getPrice(obj): Observable<any> {
+    let url = this.globalServices.ApiUrls().getPrice;
+    return this.http.HttpRequest({ url, method: "G", params: obj, ...obj });
+  }
+
+  CreateTest(obj): Observable<any> {
+    let url = this.globalServices.ApiUrls().CreateTest;
+    return this.http.HttpRequest({ url, method: "P", data: obj, ...obj });
+  }
+  getTests(obj): Observable<any> {
+    let url = this.globalServices.ApiUrls().getTests;
+    return this.http.HttpRequest({ url, method: "G", params: obj, ...obj });
   }
 }

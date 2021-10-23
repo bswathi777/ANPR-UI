@@ -11,14 +11,13 @@ import { ErrorComponent } from "./pages/errors/error/error.component";
 import { MainDashboardComponent } from "./pages/main-dashboard/main-dashboard.component";
 import { EmailDistributionComponent } from "./pages/email-distribution/email-distribution.component";
 import { FaceRecognitionComponent } from "./pages/face-recognition/face-recognition.component";
-import { FaceRecognitionVideoComponent } from "./pages/face-recognition-video/face-recognition-video.component";
+import { DigiLabComponent } from "./pages/digi-lab/digi-lab.component";
 
 export const routes: Routes = [
   { path: "", redirectTo: "main-dashboard", pathMatch: "full" },
   { path: "main-dashboard", component: MainDashboardComponent },
   { path: "cameraid-dashboard", component: CameraDashboardComponent },
-  { path: "face-recognition", component: FaceRecognitionComponent },
-  { path: "face-recognition-video", component: FaceRecognitionVideoComponent },
+
   {
     path: "",
     component: PagesComponent,
@@ -70,11 +69,16 @@ export const routes: Routes = [
         component: SearchComponent,
         data: { breadcrumb: "Search" },
       },
-      // {
-      //   path: "face-recognition",
-      //   component: FaceRecognitionComponent,
-      //   data: { breadcrumb: "face-recognition" },
-      // },
+      {
+        path: "face-recognition",
+        component: FaceRecognitionComponent,
+        data: { breadcrumb: "face-recognition" },
+      },
+      {
+        path: "digi-lab",
+        component: DigiLabComponent,
+        data: { breadcrumb: "digi-lab" },
+      },
     ],
   },
   {

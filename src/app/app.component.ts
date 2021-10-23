@@ -42,5 +42,8 @@ export class AppComponent {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    let company_dataitem = JSON.parse(localStorage.getItem("company_dataitem"));
+    console.log(company_dataitem, "company_dataitem");
+  }
 }
