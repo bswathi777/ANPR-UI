@@ -33,11 +33,11 @@
                 <mat-select placeholder="Group" name="group" [(ngModel)]="data.group" #group="ngModel" required="true">
                     <mat-option *ngFor="let list of groups" [value]="list.group">{{list.group}}</mat-option>
                 </mat-select>
-                <mat-error *ngIf="(group.errors && group.touched || f.submitted)">
+                <!-- <mat-error *ngIf="(group.errors && group.touched || f.submitted)">
                     <small *ngIf="group.errors?.required" class="haserror">
                         This field is required
                     </small>
-                </mat-error>
+                </mat-error> -->
             </mat-form-field>
 
             <div class="w-100" style="margin-bottom: 5px;">

@@ -46,6 +46,8 @@ export interface Regno {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
   ],
   // changeDetection:ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
 
@@ -86,7 +88,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   @ContentChild(MatPaginator, { static: true }) matpaginator: MatPaginator;
 
   // 'vehicle_licence_no',
-  public displayedColumns = ['date', 'vehicle_reg_no', 'api_vehicle_reg_no', 'model_vehicle_reg_no', 'vehicle_type', 'vehicle_in_time', 'vehicle_image', 'number_plate_image', 'action', 'comments'];
+  public displayedColumns = ['s.no','date', 'vehicle_reg_no', 'api_vehicle_reg_no', 'model_vehicle_reg_no', 'vehicle_type', 'vehicle_in_time', 'vehicle_image', 'number_plate_image', 'action', 'comments'];
 
   public settings: Settings;
 
@@ -136,7 +138,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
 
   }
-
+ 
   ngOnInit() {
     this.previousDate = new Date();
 
@@ -161,7 +163,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     //this.getDataMessage();
 
   }
-
+  // ngAfterViewInit(){
+  //   this.cd.detectChanges();
+  // }
   ngOnChanges() {
     this.cd.detectChanges();
   }
@@ -360,7 +364,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
   /* Update comment section  */
   updateComment(el: any, pop_data: string) {
-    console.log(pop_data)
+    // console.log(pop_data)
     if (pop_data == "success") {
       let dateFormat;
       if (this.data.date == "") {
@@ -462,6 +466,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     this.getDownloadReport(obj);
 
     this.commonService.getReportList(obj).subscribe((res) => {
+      console.log(res)
       if (res['success'] == 1) {
 
         this.anprList = new MatTableDataSource(res["data"]);
@@ -518,6 +523,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/error']);
 
       })
+       this.cd.detectChanges();
   }
 
   getVehicleListInTimer(data: any) {
@@ -606,6 +612,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     this.commonService.downloadReports(obj).subscribe((res) => {
       if (res['success'] == 1) {
         this.pdfDoc = res['file_path'];
+        console.log(this.pdfDoc)
       }
       else {
         this.globalService.showErrorMessage(res['message']);
@@ -777,6 +784,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       link.download = 'Report';
       let res = environment.API_URL + this.pdfDoc;
       link.href = res;
+      console.log( link.href)
       window.open(res, '_blank');
     } else {
       this.globalService.showErrorMessage("No File Found");

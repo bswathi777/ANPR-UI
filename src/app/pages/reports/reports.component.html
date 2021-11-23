@@ -60,6 +60,11 @@
 <div fxLayout="columns" class="p-1" fxlayout.gt-sm="row wrap" style="margin-top: -15px;">
     <div class="example-container p-2" id="example-container">
         <mat-table #table [dataSource]="anprList">
+            <ng-container matColumnDef="s.no">
+                <mat-header-cell *matHeaderCellDef> S.NO </mat-header-cell>
+                <mat-cell *matCellDef="let element ;let i = index;" data-label="s.no"> {{(currentPage*pageSize)+(i+1)}}
+                </mat-cell>
+            </ng-container>
             <ng-container matColumnDef="date">
                 <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
                 <mat-cell *matCellDef="let element" data-label="date"> {{element.date_field | date: 'dd/MM/yyyy'}}
@@ -159,7 +164,7 @@
                             edit_outline
                         </mat-icon>
                         <sat-popover #p hasBackdrop xAlign="start" yAlign="start" (closed)="update(element, $event)">
-                            <edit-form (update)="element = $event" [status_conf]="element"></edit-form>
+                            <edit-form (update)="element = $event"  [status_conf]="element"></edit-form>
                         </sat-popover>
                         <mat-icon class="material-icons color_red" (click)="deleteReport(element)">delete_outline
                         </mat-icon>

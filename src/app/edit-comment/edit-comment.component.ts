@@ -29,6 +29,9 @@ export class EditCommentComponent implements OnInit {
   module: any = {};
 
   status_data: string;
+  object: any;
+  oldItemData: any;
+  // object: any;
 
   constructor(@Optional() @Host() public popover: SatPopover, private commonService: CommonServices, public globalService: GlobalServices) {
 
@@ -37,7 +40,8 @@ export class EditCommentComponent implements OnInit {
   ngOnInit() {
     this.module = this.status_conf;
     this.module.vehicle_reg_no = this.module.vehicle_reg_no.toUpperCase( )
-    //console.log(this.data)
+    this.oldItemData = JSON.parse(JSON.stringify(this.module));
+    console.log(this.module)
   }
 
   onSubmit() {
@@ -75,7 +79,11 @@ export class EditCommentComponent implements OnInit {
   }
 
 
-  onCancel() {
+  onCancel(object) {
+    console.log(object.vehicle_reg_no)
+    this.module.vehicle_reg_no= this.oldItemData.vehicle_reg_no
+     console.log(this.module.vehicle_reg_no,"expecting old value");
+     
     if (this.popover) {
       this.popover.close();
     }

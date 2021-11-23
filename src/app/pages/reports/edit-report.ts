@@ -6,9 +6,10 @@ import { SatPopover } from '@ncstate/sat-popover';
 @Component({
   selector: 'edit-form',
   styleUrls: ['edit-report.css'],
+  // (ngSubmit)="onSubmit()"
   template: `
   <div class="content">
-  <form class="example-form" (ngSubmit)="onSubmit()">
+  <form class="example-form" (ngSubmit)="onSubmit()" >
     <div class="mat-subheading-2">Update</div>  
       <mat-form-field>
         <input type="text" name="vehicle_reg_no" placeholder="Vehicle Reg No." matInput [(ngModel)]="module.vehicle_reg_no" autocomplete="off" oninput="this.value = this.value.toUpperCase()">
@@ -41,7 +42,7 @@ export class EditForm implements OnInit {
 
   @Input() status_conf: JSON;
 
-  @Output() update = new EventEmitter<string>();
+ @Output() update = new EventEmitter<string>();
 
   onSubmitLoading: boolean;
 
@@ -58,6 +59,7 @@ export class EditForm implements OnInit {
   module: any = {};
 
   status_data: string;
+  oldItemData: any;
 
   constructor(@Optional() @Host() public popover: SatPopover, private commonService: CommonServices, public globalService: GlobalServices) {
 
@@ -66,6 +68,7 @@ export class EditForm implements OnInit {
   ngOnInit() {
     this.module = this.status_conf;
     this.module.vehicle_reg_no = this.module.vehicle_reg_no.toUpperCase( )
+    this.oldItemData = JSON.parse(JSON.stringify(this.module));
     //console.log(this.data)
   }
 
@@ -105,6 +108,9 @@ export class EditForm implements OnInit {
 
 
   onCancel() {
+    this.module.vehicle_reg_no= this.oldItemData.vehicle_reg_no
+    this.module.vehicle= this.oldItemData.vehicle
+    this.module.vehicle_status= this.oldItemData.vehicle_status
     if (this.popover) {
       this.popover.close();
     }

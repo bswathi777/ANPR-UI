@@ -33,7 +33,8 @@ export class VehicleNumberDialogComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
-  public displayedColumns = ['date', 'vehicle_status', 'vehicle_licence_no', 'vehicle_type', 'vehicle_in_time', 'vehicle_image', 'number_plate_image'];
+  // public displayedColumns = ['date', 'vehicle_status', 'vehicle_licence_no', 'vehicle_type', 'vehicle_in_time', 'vehicle_image', 'number_plate_image'];
+  public displayedColumns = ['date', 'vehicle_status','vehicle_type', 'vehicle_in_time', 'vehicle_image', 'number_plate_image'];
 
   company_id: any;
   regno: any;
@@ -63,11 +64,12 @@ export class VehicleNumberDialogComponent implements OnInit {
     this.company_id = company_dataitem.id;
 
     this.getVehicleList(dataObj)
+    console.log(dataObj)
 
   }
 
   getVehicleList(data) {
-
+console.log(data,"date should be there")
     this.emptyData = "Loading";
 
     let size;
@@ -85,7 +87,7 @@ export class VehicleNumberDialogComponent implements OnInit {
 
     obj = {
       "company_id": this.company_id,
-      "date": "",
+      "date": '',
       "reg_number": data.reg_number || this.data.vehicle_reg_no || this.data.vehicle_number,
       "from_time": "",
       "to_time": "",
@@ -101,7 +103,7 @@ export class VehicleNumberDialogComponent implements OnInit {
       if (res['success'] == 1) {
 
         this.anprList = res["data"];
-        //console.log(this.anprList);
+        console.log(this.anprList);
 
 
         this.totalRecords = res["count"];
