@@ -398,7 +398,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         let obj = {
           "hour": data.hour,
           "minute": data.minute,
-          "date": data.date_field,
+           "date": data.date_field,
+          "vehicle_in_time":data.vehicle_in_time,
           "vehicle_reg_no": data.vehicle_reg_no
         }
         this.commonService.deleteReportID(obj).subscribe(res => {

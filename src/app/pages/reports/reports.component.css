@@ -81,7 +81,11 @@ mat-header-cell{
     flex: 0 0 15% !important;
     min-width: 100px !important;
   }
- 
+  .mat-column-date {
+    padding-right: 5px;
+    flex: 0 0 9% !important;
+    min-width: 100px !important;
+  }
 
   .mat-column-api_vehicle_reg_no {
     padding-left: 5px;
